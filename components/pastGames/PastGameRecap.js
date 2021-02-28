@@ -1,0 +1,167 @@
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text, TextInput, Alert } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import * as firebase from "firebase";
+import * as Linking from "expo-linking";
+import { colors } from "../../variables";
+import { phoneNumFormat } from "../../utils/phoneNumFormat/phoneNumFormat";
+import PastGameRecapList from "./PastGameRecapList";
+
+const PastGameRecap = () => {
+  const { gameId } = useSelector((state) => state.gameReducer);
+  const [fullGame, setFullGame] = useState({});
+  const [gameWinner, setGameWinner] = useState({});
+  const [gameRestaurants, setGameRestaurants] = useState([]);
+
+  const getGame = async () => {
+    const gameVal = await firebase
+      .database()
+      .ref("games/" + gameId)
+      .once("value");
+    let res = gameVal.val();
+    setFullGame(res);
+    setGameWinner(res.winner);
+    setGameRestaurants(res.restaurants.fullArr);
+  };
+
+  useEffect(() => {
+    getGame();
+  }, [gameId]);
+
+  const phoneLink = (num) => {
+    let formatedNum = phoneNumFormat(num);
+    {
+      Linking.openURL(`tel:+1${formatedNum}`);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.text}>Game Winner:</Text>
+        <Text style={styles.title}>{gameWinner.name}</Text>
+        <Text style={styles.cuisines}>Cuisines: {gameWinner.cuisines}</Text>
+        <Text style={styles.address}>Address: {gameWinner.address}</Text>
+        <Text
+          style={styles.phone}
+          onPress={() => phoneLink(gameWinner.phone_numbers)}
+        >
+          Phone: {gameWinner.phone_numbers}
+        </Text>
+        <Text style={styles.open}>Open: {gameWinner.timings}</Text>
+        <Text style={styles.openBottom}>
+          Avg price for two: ${gameWinner.average_cost_for_two}
+        </Text>
+      </View>
+      {/* <View style={styles.card}> */}
+      <PastGameRecapList title="All Choices" list={gameRestaurants} />
+      {/* </View> */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  text: {
+    fontSize: 20,
+    color: colors.dark,
+  },
+
+  card: {
+    flex: 0.8,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "96%",
+    marginTop: 10,
+    // marginBottom: 20,
+  },
+  list: {
+    flexGrow: 1,
+    flexDirection: "column",
+  },
+  text: {
+    fontSize: 30,
+    fontWeight: "800",
+  },
+  title: {
+    fontSize: 40,
+    marginTop: 15,
+    marginLeft: 5,
+    marginRight: 5,
+    fontWeight: "800",
+    textAlign: "center",
+    color: colors.red,
+  },
+  cuisines: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginLeft: 5,
+    marginRight: 5,
+    textAlign: "center",
+    color: colors.pink,
+    marginTop: 20,
+  },
+  address: {
+    fontSize: 18,
+    marginLeft: 5,
+    marginRight: 5,
+    textAlign: "center",
+    color: colors.black,
+    marginTop: 20,
+  },
+  phone: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 15,
+    textAlign: "center",
+    color: colors.blueDark,
+  },
+  open: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginRight: 5,
+    textAlign: "center",
+    color: colors.black,
+    marginTop: 20,
+  },
+
+  openBottom: {
+    fontSize: 16,
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 20,
+    marginTop: 20,
+    textAlign: "center",
+    color: colors.black,
+  },
+  touchable: {
+    width: 300,
+    height: 40,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: colors.red,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 900000,
+  },
+
+  button: {
+    flex: 1,
+    fontSize: 25,
+    color: colors.white,
+    marginTop: 5,
+    height: "100%",
+    alignSelf: "center",
+  },
+});
+
+export default PastGameRecap;
