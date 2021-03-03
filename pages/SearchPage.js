@@ -1,22 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, KeyboardAvoidingView, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import { StyleSheet, Text, KeyboardAvoidingView } from "react-native";
 import Search from "../components/search/Search";
-import Push from "../utils/push/Push";
 import { colors } from "../variables";
 
 const SearchPage = ({ navigation }) => {
-  const { user } = useSelector((state) => state.userReducer);
-
-  const nav = () => {
-    navigation.navigate("Profile");
-  };
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : null}
-    >
-      <Push />
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.title}>Enter A Zip Code</Text>
       <Text style={styles.text}>Chewzee will find you nearby restaurants</Text>
       <Search navigation={navigation} />

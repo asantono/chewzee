@@ -59,41 +59,55 @@ export default function Push() {
   return (
     <View
       style={{
-        height: title ? "auto" : 0,
+        flex: 0,
+        height: 0,
         alignSelf: "flex-start",
         minHeight: 0,
         minWidth: "100%",
         position: "absolute",
         top: 0,
       }}
-    >
-      <TouchableOpacity
-        style={{
-          padding: title ? 10 : 0,
-          backgroundColor: colors.blue,
-        }}
-        onPress={() => {
-          dispatch(pushNotification({}));
-        }}
-      >
-        <AntDesign
-          style={{
-            position: "absolute",
-            fontSize: 25,
-            color: colors.white,
-            marginLeft: 20,
-            marginTop: 15,
-            height: title ? "auto" : 0,
-          }}
-          name="closecircleo"
-        />
-        <View style={styles.notification}>
-          <Text>{title}</Text>
-          <Text>{body}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    />
   );
+
+  // Possible notification handler:
+  //   <View
+  //     style={{
+  //       height: title ? "auto" : 0,
+  //       alignSelf: "flex-start",
+  //       minHeight: 0,
+  //       minWidth: "100%",
+  //       position: "absolute",
+  //       top: 0,
+  //     }}
+  //   >
+  //     <TouchableOpacity
+  //       style={{
+  //         padding: title ? 10 : 0,
+  //         backgroundColor: colors.blue,
+  //       }}
+  //       onPress={() => {
+  //         dispatch(pushNotification({}));
+  //       }}
+  //     >
+  //       <AntDesign
+  //         style={{
+  //           position: "absolute",
+  //           fontSize: 25,
+  //           color: colors.white,
+  //           marginLeft: 20,
+  //           marginTop: 15,
+  //           height: title ? "auto" : 0,
+  //         }}
+  //         name="closecircleo"
+  //       />
+  //       <View style={styles.notification}>
+  //         <Text>{title}</Text>
+  //         <Text>{body}</Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //   </View>
+  // );
 }
 
 const styles = StyleSheet.create({

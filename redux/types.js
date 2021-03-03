@@ -15,6 +15,8 @@ export const GO_TRUE = "GO_TRUE";
 export const RESET_WINNER = "RESET_WINNER";
 export const UPDATE_CURRENT_GAME = "UPDATE_CURRENT_GAME";
 export const UPDATE_START = "UPDATE_START";
+export const NEW_GAME_FALSE = "NEW_GAME_FALSE";
+export const NEW_GAME_TRUE = "NEW_GAME_TRUE";
 
 export const NOTIFICATION = "NOTIFICATION";
 

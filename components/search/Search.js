@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Keyboard,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +19,7 @@ const Search = (props) => {
   const [text, setText] = useState("");
   const { navigation } = props;
   const { user } = useSelector((state) => state.userReducer);
-  const { go, start } = useSelector((state) => state.gameReducer);
+  const { goTo, start } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,15 +29,16 @@ const Search = (props) => {
   }, [user.uid]);
 
   useEffect(() => {
-    if (go) {
+    if (goTo === "addFriend") {
       dispatch(goFalse());
-      if (user.pastGames.length > 1) {
+      if (user.pastGames.length < 2) {
         navigation.navigate("Instructions");
       } else navigation.navigate("Friends");
     }
-  }, [go]);
+  }, [goTo]);
 
   const onSearch = () => {
+    Keyboard.dismiss();
     try {
       const { zip, lat, lng } = useZipToCoordinates(text);
       if (!zip) {

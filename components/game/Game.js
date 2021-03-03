@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, StyleSheet, Text, Animated, Platform } from "react-native";
+import { View, StyleSheet, Text, Platform } from "react-native";
 import * as firebase from "firebase";
 import {
   gameUpdate,
+  newGameTrue,
   setWinnersArray,
   setWorkingArray,
+  resetWinner,
 } from "../../redux/actions/gameActions";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Linking from "expo-linking";
-import { updateGame } from "../../api/game";
+import { updateGame, winnerWork, updateRound } from "../../api/game";
 import { colors } from "../../variables";
 import {
   phoneNumFormat,
@@ -27,6 +29,8 @@ const Game = ({ navigation }) => {
     winnersArray,
     workingOffArrayNum,
     winner,
+    round,
+    newGame,
   } = useSelector((state) => state.gameReducer);
   const { user } = useSelector((state) => state.userReducer);
 
@@ -43,72 +47,70 @@ const Game = ({ navigation }) => {
     const ref = firebase.database().ref("games/" + gameId);
     if (!gameId) return;
     const listener = ref.on("value", (snapshot) => {
-      if (snapshot.exists()) dispatch(gameUpdate(snapshot.val()));
+      if (snapshot.exists()) {
+        dispatch(
+          gameUpdate({
+            game: snapshot.val(),
+            user,
+          })
+        );
+      }
     });
     return () => ref.off("value", listener);
-  }, [gameId]);
+  }, [gameId, newGame]);
 
+  // ALL GAME LOGIC
   // Allow the restaurants arrays to shift each round
-  useEffect(() => {
-    if (
-      (userOne === user.uid &&
-        restaurants.arr1.length === 8 &&
-        restaurants.arr1.length === restaurants.arr2.length) ||
-      (userOne === user.uid &&
-        restaurants.arr1.length === 2 &&
-        restaurants.arr1.length === restaurants.arr2.length)
-    ) {
-      dispatch(setWorkingArray(restaurants.arr1, 1));
-    } else {
-      dispatch(setWorkingArray(restaurants.arr2, 2));
-    }
 
-    // Once a winner property exists in the db, go to winners page
-    if (winner) {
-      if (winner.name) {
-        dispatch(setWorkingArray([]));
-        navigation.navigate("Winner");
+  useEffect(() => {
+    if (winner.name) {
+      dispatch(resetWinner());
+      navigation.replace("Recap");
+      return;
+    }
+    if (restaurants.arr1.length === restaurants.arr2.length) {
+      let newRound;
+
+      switch (round) {
+        case 1:
+          if (restaurants.arr1.length === 4) {
+            newRound = round + 1;
+            dispatch(newGameTrue());
+            updateRound(user, newRound);
+          }
+          break;
+        case 2:
+          if (restaurants.arr1.length === 2) {
+            newRound = round + 1;
+            dispatch(newGameTrue());
+            updateRound(user, newRound);
+          }
+          break;
+        case 3:
+          if (restaurants.arr1.length === 1) {
+            newRound = round + 1;
+            dispatch(newGameTrue());
+            updateRound(user, newRound);
+          }
+          break;
+        default:
+          break;
       }
     }
-
-    // check that this is not the last round
-    // if it is, give the last choice to player
-    // 2 and clear player ones working array
-    if (
-      restaurants.arr1.length === 1 &&
-      restaurants.arr2.length === 1 &&
-      user.uid !== userOne
-    ) {
-      dispatch(setWorkingArray([...restaurants.arr1, ...restaurants.arr2]));
-    } else if (
-      restaurants.arr1.length === 1 &&
-      restaurants.arr2.length === 1 &&
-      user.uid === userOne
-    ) {
-      dispatch(
-        setWorkingArray([
-          {
-            name: "Waiting For Player 2",
-            cuisines:
-              "You will be redirected to the winner when player two has chosen",
-            hideButton: true,
-          },
-          { name: "Enjoy The Meal" },
-        ])
-      );
-    }
-  }, [restaurants]);
+  }, [restaurants, round, winner]);
 
   const continueGame = async (choice) => {
-    // start annimation
+    // save current winners array incase of round change
+    const currentWinnersArray = [...winnersArray];
+    // set the winners array
+    dispatch(setWinnersArray([...winnersArray, choice]));
+    // check for value
+    if (!choice) return;
+    // start animation
     const sleep = (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
     await sleep(1000);
-    // check that there is a value
-    if (!choice) return;
-    // update the app state on each choice
-    dispatch(setWinnersArray([...winnersArray, choice]));
 
     // check if game is over
     if (
@@ -117,34 +119,33 @@ const Game = ({ navigation }) => {
       user.uid !== userOne
     ) {
       // create winner if game is over
-      winner(user, choice);
+      dispatch(setWinnersArray([]));
+      dispatch(setWorkingArray([]));
+      winnerWork(user, choice);
       return;
     }
-    // check if round is over
-    if (workingArray[2]) {
-      let copyArr = [...workingArray];
-      let arraySplit = copyArr.slice(2);
-      dispatch(setWorkingArray(arraySplit));
-      // add choice to winners array
-    } else {
-      // if the round is over
+    // if the round is over for player 1
+    if (!workingArray[2]) {
       // reset working arr and update the db
-
-      dispatch(
-        setWorkingArray([
-          {
-            name: "Waiting For Player 2",
-            cuisines: "You'll recieve their picks once they finish the round!",
-            hideButton: true,
-          },
-          { name: "Enjoy The Meal" },
-        ])
-      );
-      const updatedWinnersArray = [...winnersArray, choice];
+      dispatch(setWorkingArray([]));
+      // Do update here incase Redux has not fired
+      let updatedWinnersArray = [...currentWinnersArray, choice];
+      // if the round is over
       updateGame(user, updatedWinnersArray, workingOffArrayNum);
       dispatch(setWinnersArray([]));
+      return;
+    } else {
+      let copyArr = [...workingArray];
+      // Remove the two first items from the working array
+      copyArr = copyArr.slice(2);
+      // Update working array
+      dispatch(setWorkingArray(copyArr));
+      // choice already added to winners array up top
+      return;
     }
   };
+
+  // ALL GAME LOGIC OVER
 
   // TITLE INFO
   let email = "",
@@ -170,9 +171,14 @@ const Game = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.upperText}>
-        Playing with: {email} in zip: {zip}
-      </Text>
+      <View style={styles.textView}>
+        <Text style={styles.roundText}>
+          Round: {round === 4 ? "Final Round" : round}
+        </Text>
+        <Text style={styles.upperText}>
+          With: {email} in Zip: {zip}
+        </Text>
+      </View>
       {workingArray[0].hideButton ? (
         <View style={styles.waiting}>
           <Text style={styles.title}>{workingArray[0].name}</Text>
@@ -275,13 +281,23 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 10,
   },
-  upperText: {
+  textView: {
+    display: "flex",
     flex: 0.15,
+    alignItems: "center",
+    justifyContent: "space-around",
+    alignContent: "center",
+  },
+  upperText: {
     fontSize: 15,
     color: colors.red,
     fontWeight: "800",
-    marginTop: 10,
-    marginBottom: -20,
+  },
+  roundText: {
+    // flex: 1,
+    fontSize: 20,
+    color: colors.red,
+    fontWeight: "800",
   },
   waiting: {
     flex: 1,

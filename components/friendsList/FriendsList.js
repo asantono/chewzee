@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Alert,
-  FlatList,
-} from "react-native";
+import React from "react";
+import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-import { addFriendToGame } from "../../api/game";
 import { colors } from "../../variables";
+import { addFriendToGame } from "../../api/game";
+import Loading from "../loading/Loading";
 
 const FriendsList = ({ navigation }) => {
-  const { user, tempFriend } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const { gameId, userOne, userTwo } = useSelector(
     (state) => state.gameReducer
   );
@@ -31,6 +25,7 @@ const FriendsList = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Loading />
       <Text style={styles.title}>Pick A Friend</Text>
       <FlatList
         data={user.friends}

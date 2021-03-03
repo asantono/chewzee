@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TextInput, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Alert,
+  Keyboard,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
 import { findFriend, clearFriend } from "../../redux/actions/userActions";
+import Loading from "../loading/Loading";
 import { addFollow } from "../../api/game";
 import { colors } from "../../variables";
 
@@ -21,6 +29,7 @@ const AddFriends = () => {
   const onFindFriend = () => {
     try {
       dispatch(findFriend(email));
+      Keyboard.dismiss();
     } catch (err) {
       console.log(err);
     }
@@ -31,6 +40,7 @@ const AddFriends = () => {
   };
   return (
     <View style={styles.container}>
+      <Loading />
       <TextInput
         style={styles.textInput}
         onChangeText={(email) => setEmail(email)}
@@ -43,7 +53,6 @@ const AddFriends = () => {
       <TouchableOpacity onPress={() => onFindFriend()} style={styles.touchable}>
         <Text style={styles.button}>Find Friend</Text>
       </TouchableOpacity>
-      {/* <Text style={styles.found}>{tempFriend.email}</Text> */}
       {tempFriend.email ? (
         <TouchableOpacity
           style={styles.touchableTwo}
@@ -65,7 +74,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
-    // backgroundColor: colors.pink,
   },
   textInput: {
     height: 40,

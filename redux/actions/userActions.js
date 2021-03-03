@@ -1,5 +1,6 @@
+import { v4 as uuid } from "uuid";
+import { setLoading } from "./loadingActions";
 import { USER_UPDATE, NO_USER, FRIENDS_UPDATE, TEMP_FRIEND } from "../types";
-import { pushToken } from "../../api/auth";
 
 const makeSocialArray = (obj) => {
   let arr = [];
@@ -46,6 +47,8 @@ export const friendsUpdate = () => {
 
 export const findFriend = (email) => async (dispatch) => {
   try {
+    const loadId = uuid();
+    dispatch(setLoading(loadId));
     let body = { email };
     body = JSON.stringify(body);
     const firebaseFunc =
@@ -59,8 +62,10 @@ export const findFriend = (email) => async (dispatch) => {
     });
     res = await res.json();
     dispatch({ type: TEMP_FRIEND, payload: res });
+    dispatch(setLoading(loadId));
   } catch (err) {
     console.log(err);
+    dispatch(setLoading(loadId));
     Alert.alert("Failed to find restaurants. Please try again later");
   }
 };

@@ -12,6 +12,10 @@ export const addFollow = async (user, tempFriend) => {
     Alert.alert("You have already added this person");
     return;
   }
+  if (user.email === tempFriend.email) {
+    Alert.alert("This person is you. You can't play against yourself... yet");
+    return;
+  }
   try {
     firebase
       .database()
@@ -48,7 +52,6 @@ export const addFriendToGame = async (friend, user) => {
         userTwo: friend.uid,
         userTwoEmail: friend.email,
       });
-
     const gameRef = firebase
       .database()
       .ref(`users/${friend.uid}/activeGames`)
@@ -85,11 +88,30 @@ export const updateGame = async (user, winnersArray, workingOffArrayNum) => {
   }
 };
 
-export const winner = async (user, winningChoice) => {
+export const newCurrentGame = (user, game) => {
+  try {
+    firebase.database().ref(`users/${user.uid}/currentGame`).set(game);
+  } catch (err) {
+    Alert.alert("Update failed. Try again later");
+  }
+};
+
+export const updateRound = async (user, round) => {
   try {
     firebase
       .database()
-      .ref(`games/${user.currentGame.gameId}/restaurants/winner`)
+      .ref(`games/${user.currentGame.gameId}`)
+      .update({ round: round });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const winnerWork = async (user, winningChoice) => {
+  try {
+    firebase
+      .database()
+      .ref(`games/${user.currentGame.gameId}/winner`)
       .set(winningChoice);
   } catch (err) {
     Alert.alert("Update failed. Try again later");
@@ -110,10 +132,6 @@ export const gameOver = async (user) => {
     console.log(err);
   }
 };
-
-// export const deleteAllGames = async () => {
-//   firebase.database().ref(`games`).remove();
-// };
 
 export const deleteActiveGame = async (user, game) => {
   try {
@@ -142,14 +160,5 @@ export const deleteActiveGame = async (user, game) => {
     }
   } catch (err) {
     console.log(err);
-  }
-};
-
-export const newCurrentGame = (user, game) => {
-  try {
-    // const {gameId, gameInitiated, gameOverId, userTwo, userTwoEmail, userOne, userOneEmail} = game
-    firebase.database().ref(`users/${user.uid}/currentGame`).set(game);
-  } catch (err) {
-    Alert.alert("Update failed. Try again later");
   }
 };

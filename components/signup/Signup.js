@@ -32,20 +32,22 @@ const Signup = (props) => {
     if (!email || !password) {
       alert("Please enter an email and password");
     }
-    await signup(email, password);
+    await signup(email.toString().trim(), password.toString().trim());
   };
 
   const doLogin = async () => {
     if (!email || !password) {
       alert("Please enter an email and password");
     }
-    await login(email, password);
+    await login(email.toString().trim(), password.toString().trim());
   };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : null}
+      behavior="padding"
+
+      //{Platform.OS === "ios" ? "padding" : null}
     >
       <TextInput
         style={styles.textInput}
@@ -65,6 +67,14 @@ const Signup = (props) => {
         onPress={() => (signUp === "signup" ? doSignup() : doLogin())}
       >
         <Text style={styles.button}>{signUp}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.toggle}
+        onPress={() => navigation.navigate("TermsAndConditions")}
+      >
+        <Text style={styles.toggleText}>
+          Terms and conditions are agreed to by authenticating
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.toggle} onPress={() => toggleSwitch()}>
         {signUp === "signup" ? (

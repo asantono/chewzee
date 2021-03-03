@@ -53,9 +53,7 @@ const PastGameRecap = () => {
           Avg price for two: ${gameWinner.average_cost_for_two}
         </Text>
       </View>
-      {/* <View style={styles.card}> */}
       <PastGameRecapList title="All Choices" list={gameRestaurants} />
-      {/* </View> */}
     </View>
   );
 };
@@ -64,31 +62,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    marginBottom: 10,
   },
-  text: {
-    fontSize: 20,
-    color: colors.dark,
-  },
-
   card: {
-    flex: 0.8,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     width: "96%",
     marginTop: 10,
-    // marginBottom: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   list: {
     flexGrow: 1,
     flexDirection: "column",
   },
   text: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "800",
   },
   title: {
-    fontSize: 40,
-    marginTop: 15,
+    fontSize: 30,
     marginLeft: 5,
     marginRight: 5,
     fontWeight: "800",
@@ -102,7 +96,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     textAlign: "center",
     color: colors.pink,
-    marginTop: 20,
   },
   address: {
     fontSize: 18,
@@ -110,14 +103,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
     textAlign: "center",
     color: colors.black,
-    marginTop: 20,
   },
   phone: {
     fontSize: 18,
     fontWeight: "600",
     marginLeft: 5,
     marginRight: 5,
-    marginTop: 15,
     textAlign: "center",
     color: colors.blueDark,
   },
@@ -127,7 +118,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     textAlign: "center",
     color: colors.black,
-    marginTop: 20,
   },
 
   openBottom: {

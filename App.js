@@ -24,12 +24,12 @@ import Listen from "./components/listen/Listen";
 import UserListener from "./components/listen/UserListener";
 import FriendsPage from "./pages/FriendsPage";
 import GamePage from "./pages/GamePage";
-import WinnerPage from "./pages/WinnerPage";
 import ActiveGamesPage from "./pages/ActiveGamesPage";
 import PastGamesPage from "./pages/PastGamesPage";
 import LandingPage from "./pages/LandingPage";
 import InstructionsPage from "./pages/InstructionsPage";
 import PastGameRecapPage from "./pages/PastGameRecapPage";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 LogBox.ignoreLogs(["Setting a timer"]);
 
@@ -152,12 +152,15 @@ const Nav = () => {
         />
         <Stack.Screen name="Instructions" component={InstructionsPage} />
         <Stack.Screen name="Game" component={GamePage} />
-        <Stack.Screen name="Winner" component={WinnerPage} />
         <Stack.Screen name="ActiveGames" component={ActiveGamesPage} />
         <Stack.Screen name="PastGames" component={PastGamesPage} />
         <Stack.Screen name="Recap" component={PastGameRecapPage} />
         <Stack.Screen name="Profile" component={Card} />
         <Stack.Screen name="Settings" component={Options} />
+        <Stack.Screen
+          name="TermsAndConditions"
+          component={TermsAndConditions}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

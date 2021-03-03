@@ -48,6 +48,7 @@ exports.searchZomato = functions.https.onRequest(async (req, res) => {
       userOne: user.uid,
       userOneEmail: user.email,
       winner: { name: "" },
+      round: 1,
       gameInitiated,
     });
     const gameRef = admin
@@ -96,3 +97,74 @@ exports.getUserByEmail = functions.https.onRequest(async (req, res) => {
     res.status(404).json({ msg: "user not found" });
   }
 });
+
+// exports.addFriendToGame = functions.https.onRequest(async (req, res) => {
+//   try {
+//     const { friend, user } = req.body;
+//     admin.database().ref(`games/${user.currentGame.gameId}`).update({
+//       userTwo: friend.uid,
+//       userTwoEmail: friend.email,
+//     });
+//     admin.database().ref(`users/${user.uid}/currentGame`).update({
+//       userTwo: friend.uid,
+//       userTwoEmail: friend.email,
+//     });
+//     admin
+//       .database()
+//       .ref(`users/${user.uid}/activeGames/${user.currentGame.gameOverId}`)
+//       .update({
+//         userTwo: friend.uid,
+//         userTwoEmail: friend.email,
+//       });
+//     const gameRef = admin
+//       .database()
+//       .ref(`users/${friend.uid}/activeGames`)
+//       .push();
+//     const gameKey = gameRef.key;
+//     gameRef.set({
+//       gameId: user.currentGame.gameId,
+//       gameOverId: gameKey,
+//       zip: user.currentGame.zip,
+//       gameInitiated: user.currentGame.gameInitiated,
+//       userOne: user.uid,
+//       userOneEmail: user.email,
+//     });
+//     res.status(200).json({ success: "success" });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json({ error: err, msg: "Add failed. Try again later" });
+//   }
+// });
+
+// exports.deleteActiveGame = functions.https.onRequest(async (req, res) => {
+//   const { user, game } = req.body;
+//   try {
+//     admin
+//       .database()
+//       .ref(`users/${user.uid}/activeGames/${game.gameOverId}`)
+//       .remove();
+//     admin.database().ref(`games/${game.gameId}`).remove();
+//     let secondId = game.userOne ? game.userOne : game.userTwo;
+//     if (secondId) {
+//       const ref = admin.database().ref(`users/${secondId}/activeGames`);
+//       const res = await ref.once("value");
+//       const userTwoGames = await res.val();
+//       let deleteVal;
+//       for (let prop in userTwoGames) {
+//         if (userTwoGames[prop].gameId === game.gameId) {
+//           deleteVal = userTwoGames[prop].gameOverId;
+//         }
+//       }
+//       if (deleteVal) {
+//         admin
+//           .database()
+//           .ref(`users/${secondId}/activeGames/${deleteVal}`)
+//           .remove();
+//       }
+//     }
+//     res.status(200).json({ success: "success" });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json({ error: err, msg: "Add failed. Try again later" });
+//   }
+// });

@@ -1,11 +1,13 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Game from "../components/game/Game";
+import Push from "../utils/push/Push";
 import { colors } from "../variables";
 
 const GamePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Push />
       <Game navigation={navigation} />
     </View>
   );

@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentGame } from "../../redux/actions/gameActions";
 import GameList from "../gameList/GameList";
-import { deleteActiveGame, newCurrentGame } from "../../api/game";
+import { newCurrentGame, deleteActiveGame } from "../../api/game";
+// import { deleteActiveGame } from "../../redux/actions/gameActions";
 
 const ActiveGames = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
