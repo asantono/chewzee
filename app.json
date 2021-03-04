@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.papasanto.chewzee",
-      "buildNumber": "0.8.2",
+      "buildNumber": "0.8.3",
       "config": {
 "googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
       }

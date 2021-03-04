@@ -11,18 +11,17 @@ const GamePage = ({ navigation }) => {
   const { roundOver } = useSelector((state) => state.gameReducer);
   const { pastGames } = useSelector((state) => state.userReducer.user);
 
-  console.log(roundOver);
-
-  useEffect(() => {
-    if (pastGames.length < 2) return;
-    if (roundOver) {
-      let serveAd = getRandomInt(10);
-      console.log(serveAd);
-      if (serveAd > 5) {
-        openInterstitial();
-      }
-    }
-  }, [roundOver]);
+  // TURN ON FOR ADS
+  // useEffect(() => {
+  //   if (pastGames.length < 2) return;
+  //   if (roundOver) {
+  //     let serveAd = getRandomInt(10);
+  //     console.log(serveAd);
+  //     if (serveAd > 5) {
+  //       openInterstitial();
+  //     }
+  //   }
+  // }, [roundOver]);
 
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
