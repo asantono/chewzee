@@ -37,7 +37,15 @@ export const addFollow = async (user, tempFriend) => {
 
 export const addFriendToGame = async (friend, user) => {
   try {
-    firebase.database().ref(`games/${user.currentGame.gameId}`).update({
+    const ref = firebase.database().ref(`games/${user.currentGame.gameId}`);
+    let game = await ref.once("value");
+    game = await game.val();
+    if (game.userTwo) {
+      Alert.alert(
+        `You currently have an opponent. Please start a new game to play with ${friend.email}`
+      );
+    }
+    ref.update({
       userTwo: friend.uid,
       userTwoEmail: friend.email,
     });
@@ -119,7 +127,18 @@ export const winnerWork = async (user, winningChoice) => {
 };
 
 export const gameOver = async (user) => {
+  console.log(gameOver);
   try {
+    if (user.pastGames.length > 9) {
+      const pastRef = firebase.database().ref(`users/${user.uid}/pastGames`);
+      await pastRef.remove();
+      const pastGames = user.pastGames.sort(
+        (a, b) => b.gameInitiated - a.gameInitiated
+      );
+      for (let i = 0; i < 9; i++) {
+        pastRef.push(pastGames[i]);
+      }
+    }
     firebase
       .database()
       .ref(`users/${user.uid}/pastGames`)

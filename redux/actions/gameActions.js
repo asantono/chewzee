@@ -13,6 +13,7 @@ import {
   UPDATE_START,
   NEW_GAME_FALSE,
   NEW_GAME_TRUE,
+  ROUND_OVER,
 } from "../types";
 import { setLoading } from "./loadingActions";
 
@@ -22,6 +23,10 @@ export const goTrue = (name) => {
 
 export const goFalse = () => {
   return { type: GO_FALSE };
+};
+
+export const setRoundOver = (bool) => {
+  return { type: ROUND_OVER, payload: bool };
 };
 
 export const setRestaurants = (user, lat, lng, zip, start) => async (

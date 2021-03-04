@@ -3,7 +3,10 @@ import "react-native-gesture-handler";
 import React from "react";
 import { StyleSheet, View, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -151,11 +154,32 @@ const Nav = () => {
           }}
         />
         <Stack.Screen name="Instructions" component={InstructionsPage} />
-        <Stack.Screen name="Game" component={GamePage} />
+        <Stack.Screen
+          name="Game"
+          component={GamePage}
+          options={({ navigation }) => ({
+            headerLeft: (props) => (
+              <HeaderBackButton
+                {...props}
+                onPress={() => navigation.navigate("Home")}
+              />
+            ),
+          })}
+        />
         <Stack.Screen name="ActiveGames" component={ActiveGamesPage} />
         <Stack.Screen name="PastGames" component={PastGamesPage} />
-        <Stack.Screen name="Recap" component={PastGameRecapPage} />
-        <Stack.Screen name="Profile" component={Card} />
+        <Stack.Screen
+          name="Recap"
+          component={PastGameRecapPage}
+          options={({ navigation }) => ({
+            headerLeft: (props) => (
+              <HeaderBackButton
+                {...props}
+                onPress={() => navigation.navigate("Home")}
+              />
+            ),
+          })}
+        />
         <Stack.Screen name="Settings" component={Options} />
         <Stack.Screen
           name="TermsAndConditions"

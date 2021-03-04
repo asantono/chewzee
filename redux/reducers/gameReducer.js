@@ -12,6 +12,7 @@ import {
   UPDATE_START,
   NEW_GAME_FALSE,
   NEW_GAME_TRUE,
+  ROUND_OVER,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -34,6 +35,7 @@ const INITIAL_STATE = {
   start: 0,
   round: 1,
   newGame: true,
+  roundOver: false,
 };
 
 const gameReducer = (state = INITIAL_STATE, action) => {
@@ -66,6 +68,11 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         winnersArray: payload,
+      };
+    case ROUND_OVER:
+      return {
+        ...state,
+        roundOver: payload,
       };
     case GO_FALSE:
       return {
@@ -129,6 +136,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           ...state,
           restaurants: game.restaurants,
           round: game.round,
+          roundOver: false,
           winner: game.winner || INITIAL_STATE.winner,
         };
       };
@@ -143,6 +151,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           userTwo: game.userTwo || "",
           winner: game.winner || INITIAL_STATE.winner,
           round: game.round,
+          roundOver: false,
         };
       };
 
@@ -157,6 +166,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           userTwo: game.userTwo || "",
           winner: game.winner || INITIAL_STATE.winner,
           round: game.round,
+          roundOver: true,
         };
       };
 
@@ -171,6 +181,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           userTwo: game.userTwo || "",
           winner: game.winner || INITIAL_STATE.winner,
           round: game.round,
+          roundOver: true,
         };
       };
 

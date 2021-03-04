@@ -20,7 +20,7 @@ const FriendsList = ({ navigation }) => {
       return;
     }
     addFriendToGame(friend, user);
-    navigation.navigate("Game");
+    navigation.replace("Game");
   };
 
   return (

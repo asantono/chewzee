@@ -12,10 +12,11 @@ const FadeOutView = (props) => {
 
   const startFloatWait = async () => {
     setStartFade(false);
+    await sleep(350);
     Animated.timing(floatAnim, {
       toValue: -0.1,
       useNativeDriver: true,
-      duration: 400,
+      duration: 300,
     }).start(),
       await sleep(400);
     Animated.timing(floatAnim, {
@@ -37,7 +38,7 @@ const FadeOutView = (props) => {
   });
 
   const fadeInWait = async () => {
-    await sleep(1000);
+    await sleep(1400);
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 0,
@@ -50,7 +51,7 @@ const FadeOutView = (props) => {
     if (startFade) {
       Animated.timing(fadeAnim, {
         toValue: 0,
-        duration: 1000,
+        duration: 350,
         useNativeDriver: true,
       }).start();
       fadeInWait();

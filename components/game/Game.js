@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/gameActions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Linking from "expo-linking";
-import { updateGame, winnerWork, updateRound } from "../../api/game";
+import { updateGame, winnerWork, updateRound, gameOver } from "../../api/game";
 import { colors } from "../../variables";
 import {
   phoneNumFormat,
@@ -65,6 +65,7 @@ const Game = ({ navigation }) => {
   useEffect(() => {
     if (winner.name) {
       dispatch(resetWinner());
+      gameOver(user);
       navigation.replace("Recap");
       return;
     }
@@ -110,7 +111,7 @@ const Game = ({ navigation }) => {
     const sleep = (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    await sleep(1000);
+    await sleep(1250);
 
     // check if game is over
     if (
