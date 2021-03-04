@@ -1,9 +1,16 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import Landing from "../components/landing/Landing";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import PastGameRecap from "../components/pastGames/PastGameRecap";
+import { useSelector } from "react-redux";
 
 const PastGameRecapPage = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (!user.uid) {
+      navigation.replace("Signup");
+    }
+  }, [user.uid]);
+
   return (
     <View style={styles.container}>
       <PastGameRecap navigation={navigation} />

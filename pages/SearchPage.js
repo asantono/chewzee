@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, KeyboardAvoidingView } from "react-native";
 import Search from "../components/search/Search";
 import { colors } from "../variables";
+import { useSelector } from "react-redux";
 
 const SearchPage = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (!user.uid) {
+      navigation.replace("Signup");
+    }
+  }, [user.uid]);
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.title}>Enter A Zip Code</Text>

@@ -13,6 +13,7 @@ import {
   NEW_GAME_FALSE,
   NEW_GAME_TRUE,
   ROUND_OVER,
+  LOGOUT,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -119,6 +120,8 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         workingArray: INITIAL_STATE.workingArray,
         winnersArray: INITIAL_STATE.winnersArray,
       };
+    case LOGOUT:
+      return INITIAL_STATE;
 
     case GAME_UPDATE:
       // THIS IS ALL THE GAME LOGIC ACCEPT FOR ROUND ADVANCES AND WINNER ADVANCES

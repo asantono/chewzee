@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import PastGames from "../components/pastGames/PastGames";
 import { colors } from "../variables";
+import { useSelector } from "react-redux";
 
 const PastGamesPage = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    if (!user.uid) {
+      navigation.replace("Signup");
+    }
+  }, [user.uid]);
+
   return (
     <View style={styles.container}>
       <PastGames navigation={navigation} />

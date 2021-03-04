@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import Options from "../components/options/Options";
+import { useSelector } from "react-redux";
 
 const OptionsPage = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (!user.uid) {
+      navigation.replace("Signup");
+    }
+  }, [user.uid]);
+
   return (
     <KeyboardAvoidingView
       style={styles.container}

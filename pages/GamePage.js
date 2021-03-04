@@ -8,8 +8,15 @@ import Push from "../utils/push/Push";
 import { colors } from "../variables";
 
 const GamePage = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+  useEffect(() => {
+    if (!user.uid) {
+      navigation.replace("Signup");
+    }
+  }, [user.uid]);
+
   const { roundOver } = useSelector((state) => state.gameReducer);
-  const { pastGames } = useSelector((state) => state.userReducer.user);
+  const { pastGames } = user;
 
   // TURN ON FOR ADS
   // useEffect(() => {

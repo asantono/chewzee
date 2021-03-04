@@ -13,7 +13,7 @@ const FriendsList = ({ navigation }) => {
   );
 
   const addToGame = (friend) => {
-    if (!gameId || userOne || userTwo) {
+    if (!gameId || (userOne && userTwo)) {
       Alert.alert(
         "Please start a game. You can select a friend after starting a new game"
       );

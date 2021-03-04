@@ -23,12 +23,6 @@ const Search = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user.uid) {
-      navigation.replace("Signup");
-    }
-  }, [user.uid]);
-
-  useEffect(() => {
     if (goTo === "addFriend") {
       dispatch(goFalse());
       if (user.pastGames.length < 2) {

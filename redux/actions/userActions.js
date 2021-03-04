@@ -1,6 +1,13 @@
 import { v4 as uuid } from "uuid";
+import { Alert } from "react-native";
 import { setLoading } from "./loadingActions";
-import { USER_UPDATE, NO_USER, FRIENDS_UPDATE, TEMP_FRIEND } from "../types";
+import {
+  USER_UPDATE,
+  NO_USER,
+  FRIENDS_UPDATE,
+  TEMP_FRIEND,
+  LOGOUT,
+} from "../types";
 
 const makeSocialArray = (obj) => {
   let arr = [];
@@ -45,11 +52,11 @@ export const friendsUpdate = () => {
   return { type: FRIENDS_UPDATE, payload: friendsList };
 };
 
-export const findFriend = (email) => async (dispatch) => {
+export const findFriend = (email, user) => async (dispatch) => {
+  const loadId = uuid();
+  dispatch(setLoading(loadId));
   try {
-    const loadId = uuid();
-    dispatch(setLoading(loadId));
-    let body = { email };
+    let body = { email, user };
     body = JSON.stringify(body);
     const firebaseFunc =
       //   "http://localhost:5001/chewzee-2bf67/us-central1/getUserByEmail";
@@ -66,10 +73,14 @@ export const findFriend = (email) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     dispatch(setLoading(loadId));
-    Alert.alert("Failed to find restaurants. Please try again later");
+    Alert.alert(err.msg);
   }
 };
 
 export const clearFriend = () => {
   return { type: TEMP_FRIEND, payload: {} };
+};
+
+export const logoutRedux = () => {
+  return { type: LOGOUT };
 };

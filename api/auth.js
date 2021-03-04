@@ -14,12 +14,12 @@ export class UserSchema {
 export const signup = async (email, password) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
-    const currentUser = firebase.auth().currentUser;
-    const newUser = new UserSchema(currentUser.uid, currentUser.email);
-    firebase
-      .database()
-      .ref("users/" + currentUser.uid)
-      .set(newUser);
+    // const currentUser = firebase.auth().currentUser;
+    // const newUser = new UserSchema(currentUser.uid, currentUser.email);
+    // firebase
+    //   .database()
+    //   .ref("users/" + currentUser.uid)
+    //   .set(newUser);
   } catch (err) {
     console.log(err);
     Alert.alert(err.message);

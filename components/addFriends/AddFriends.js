@@ -20,15 +20,15 @@ const AddFriends = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (tempFriend.msg === "user not found") {
-      Alert.alert("User not found. Please invite them to play!");
+    if (tempFriend.msg) {
+      Alert.alert(tempFriend.msg);
       dispatch(clearFriend());
     }
   }, [tempFriend]);
 
   const onFindFriend = () => {
     try {
-      dispatch(findFriend(email));
+      dispatch(findFriend(email, user));
       Keyboard.dismiss();
     } catch (err) {
       console.log(err);
