@@ -3,6 +3,7 @@ import { StyleSheet, Text, KeyboardAvoidingView } from "react-native";
 import Search from "../components/search/Search";
 import { colors } from "../variables";
 import { useSelector } from "react-redux";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const SearchPage = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -12,8 +13,18 @@ const SearchPage = ({ navigation }) => {
     }
   }, [user.uid]);
 
+  const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior="padding"
+      onPress={() => Keyboard.dismiss()}
+    >
       <Text style={styles.title}>Enter A Zip Code</Text>
       <Text style={styles.text}>Chewzee will find you nearby restaurants</Text>
       <Search navigation={navigation} />

@@ -3,17 +3,14 @@ import { View, StyleSheet, Text, TextInput, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../../variables";
-import { logout } from "../../api/auth";
 import { updateStart } from "../../redux/actions/gameActions";
-import { logoutRedux } from "../../redux/actions/userActions";
+import { logout } from "../../api/auth";
 
 const Options = ({ navigation }) => {
   const doLogout = async () => {
-    dispatch(logoutRedux());
-    await logout();
+    logout();
   };
 
-  // const [text, setText] = useState('')
   const { user } = useSelector((state) => state.userReducer);
   const { start } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();

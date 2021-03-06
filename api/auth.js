@@ -14,14 +14,9 @@ export class UserSchema {
 export const signup = async (email, password) => {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
-    // const currentUser = firebase.auth().currentUser;
-    // const newUser = new UserSchema(currentUser.uid, currentUser.email);
-    // firebase
-    //   .database()
-    //   .ref("users/" + currentUser.uid)
-    //   .set(newUser);
   } catch (err) {
     console.log(err);
+
     Alert.alert(err.message);
   }
 };
@@ -56,4 +51,12 @@ export const pushToken = async (token, user) => {
   }
 };
 
-export const passwordReset = (email) => auth.sendPasswordResetEmail(email);
+export const passwordReset = (email) => {
+  try {
+    firebase.auth().sendPasswordResetEmail(email);
+
+    Alert.alert(`Password reset email sent to ${email}`);
+  } catch (err) {
+    Alert.alert(err.message);
+  }
+};

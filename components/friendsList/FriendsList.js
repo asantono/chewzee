@@ -3,8 +3,8 @@ import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import { colors } from "../../variables";
-import { addFriendToGame } from "../../api/game";
 import Loading from "../loading/Loading";
+import { addFriendToGame } from "../../api/game";
 
 const FriendsList = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);

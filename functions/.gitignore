@@ -1,1 +1,8 @@
 node_modules/
+admin
+admin/
+.admin
+chewzee-service.json
+chewzee-service
+.chewzee-service
+/chewzee-service

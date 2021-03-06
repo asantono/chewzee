@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { AntDesign } from "@expo/vector-icons";
 import { pushToken } from "../../api/auth";
-import { pushNotification } from "../../redux/actions/gameActions";
+import { pushNotification } from "../../redux/actions/notificationActions";
 import { colors } from "../../variables";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

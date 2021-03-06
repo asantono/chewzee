@@ -32,15 +32,6 @@ export const addFollow = async (user, tempFriend) => {
       headers,
       body: body,
     });
-
-    // firebase
-    //   .database()
-    //   .ref("users/" + tempFriend.uid + "/followers")
-    //   .push({
-    //     email: user.email,
-    //     uid: user.uid,
-    //     pushToken: user.pushToken || "",
-    //   });
   } catch (err) {
     Alert.alert("Add failed. Try again later");
   }
@@ -81,21 +72,6 @@ export const addFriendToGame = async (friend, user) => {
         userTwo: friend.uid,
         userTwoEmail: friend.email,
       });
-
-    // const gameRef = firebase
-    //   .database()
-    //   .ref(`users/${friend.uid}/activeGames`)
-    //   .push();
-    // const gameKey = gameRef.key;
-    // gameRef.set({
-    //   gameId: user.currentGame.gameId,
-    //   gameOverId: gameKey,
-    //   zip: user.currentGame.zip,
-    //   gameInitiated: user.currentGame.gameInitiated,
-    //   userOne: user.uid,
-    //   userOneEmail: user.email,
-    // });
-
     if (friend.pushToken) {
       await sendPushNotification(friend.pushToken);
     }
@@ -149,7 +125,6 @@ export const winnerWork = async (user, winningChoice) => {
 };
 
 export const gameOver = async (user) => {
-  console.log(gameOver);
   try {
     if (user.pastGames.length > 9) {
       const pastRef = firebase.database().ref(`users/${user.uid}/pastGames`);
@@ -174,7 +149,7 @@ export const gameOver = async (user) => {
   }
 };
 
-export const deleteActiveGame = async (user, game) => {
+export const deleteActiveGame = async (user, game, dispatch) => {
   try {
     firebase
       .database()
@@ -182,7 +157,6 @@ export const deleteActiveGame = async (user, game) => {
       .remove();
     firebase.database().ref(`games/${game.gameId}`).remove();
     let secondId = game.userOne ? game.userOne : game.userTwo;
-
     if (secondId) {
       let body = { game, secondId };
       body = JSON.stringify(body);
@@ -194,21 +168,6 @@ export const deleteActiveGame = async (user, game) => {
         headers,
         body: body,
       });
-      // const ref = firebase.database().ref(`users/${secondId}/activeGames`);
-      // const res = await ref.once("value");
-      // const userTwoGames = await res.val();
-      // let deleteVal;
-      // for (let prop in userTwoGames) {
-      //   if (userTwoGames[prop].gameId === game.gameId) {
-      //     deleteVal = userTwoGames[prop].gameOverId;
-      //   }
-      // }
-      // if (deleteVal) {
-      //   firebase
-      //     .database()
-      //     .ref(`users/${secondId}/activeGames/${deleteVal}`)
-      //     .remove();
-      // }
     }
   } catch (err) {
     console.log(err);

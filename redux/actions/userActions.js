@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Alert } from "react-native";
 import { setLoading } from "./loadingActions";
+import { signup, login, passwordReset, logout } from "../../api/auth";
 import {
   USER_UPDATE,
   NO_USER,
@@ -44,6 +45,23 @@ export const userUpdate = (user) => {
   return { type: USER_UPDATE, payload: user };
 };
 
+export const signupRedux = (email, password) => (dispatch) => {
+  signup(email, password, dispatch);
+};
+
+export const loginRedux = (email, password) => (dispatch) => {
+  login(email, password, dispatch);
+};
+
+export const logoutRedux = () => (dispatch) => {
+  logout(dispatch);
+  return { type: LOGOUT };
+};
+
+export const passwordResetRedux = (email) => (dispatch) => {
+  passwordReset(email, dispatch);
+};
+
 export const noUser = () => {
   return { type: NO_USER };
 };
@@ -79,8 +97,4 @@ export const findFriend = (email, user) => async (dispatch) => {
 
 export const clearFriend = () => {
   return { type: TEMP_FRIEND, payload: {} };
-};
-
-export const logoutRedux = () => {
-  return { type: LOGOUT };
 };

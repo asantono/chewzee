@@ -11,8 +11,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
 import { findFriend, clearFriend } from "../../redux/actions/userActions";
 import Loading from "../loading/Loading";
-import { addFollow } from "../../api/game";
 import { colors } from "../../variables";
+import { addFollow } from "../../api/game";
 
 const AddFriends = () => {
   const { user, tempFriend } = useSelector((state) => state.userReducer);

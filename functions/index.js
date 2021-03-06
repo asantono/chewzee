@@ -7,8 +7,12 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const { htmlToText } = require("html-to-text");
 const { formatRes, shuffle } = require("./controllers/helperFunctions");
+const serviceKey = require("./chewzee-service.json");
 
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceKey),
+  databaseURL: "https://chewzee-2bf67-default-rtdb.firebaseio.com",
+});
 
 const app = express();
 
@@ -128,6 +132,8 @@ exports.createUserInDb = functions.auth.user().onCreate((user) => {
       .database()
       .ref("users/" + user.uid)
       .set(newUser);
+
+    user.sendEmailVerification();
   } catch (err) {
     console.log(err);
     res.status(404).json({ msg: "user creation failed" });

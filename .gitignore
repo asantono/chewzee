@@ -10,5 +10,13 @@ npm-debug.*
 web-build/
 ./firebase.js
 /firebase.js
+functions/admin
+functions/chewzee-service.json
+functions/chewzee-service
+/chewzee-service.json
+/chewzee-service
+chewzee-service
+chewzee-service.json
+
 # macOS
 .DS_Store

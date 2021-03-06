@@ -1,5 +1,6 @@
 import { Alert } from "react-native";
 import { v4 as uuid } from "uuid";
+import { addFollow, addFriendToGame, deleteActiveGame } from "../../api/game";
 import {
   SET_GAME_ID,
   GAME_UPDATE,
@@ -74,16 +75,6 @@ export const resetWinner = () => {
   return { type: RESET_WINNER };
 };
 
-export const pushNotification = (notification) => {
-  let body = "",
-    title = "";
-  if (notification.request) {
-    body = notification.request.content.body;
-    title = notification.request.content.title;
-  }
-  return { type: NOTIFICATION, payload: { body, title } };
-};
-
 export const updateCurrentGame = (game) => (dispatch) => {
   dispatch(setWorkingArray([]));
   dispatch(setWinnersArray([]));
@@ -103,6 +94,18 @@ export const newGameTrue = () => {
 
 export const gameUpdate = (obj) => {
   return { type: GAME_UPDATE, payload: obj };
+};
+
+export const addFollowRedux = (user, tempFriend) => (dispatch) => {
+  addFollow(user, tempFriend, dispatch);
+};
+
+export const addFriendToGameRedux = (friend, user) => (dispatch) => {
+  addFriendToGame(friend, user, dispatch);
+};
+
+export const deleteActiveGameRedux = (user, game) => (dispatch) => {
+  deleteActiveGame(user, game, dispatch);
 };
 
 // export const addFriendToGame = (friend, user) => async (dispatch) => {

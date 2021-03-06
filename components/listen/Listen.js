@@ -5,17 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { userUpdate, noUser } from "../../redux/actions/userActions";
 
 const Listen = () => {
-  //   const { user } = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state) => state.userReducer);
   //   const { email, fake } = user;
   const dispatch = useDispatch();
 
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      dispatch(userUpdate(user));
-    } else {
-      dispatch(noUser());
-    }
-  });
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(userUpdate(user));
+      } else {
+        dispatch(noUser());
+      }
+    });
+  }, [user.uid]);
 
   return <View style={styles.container} />;
 };

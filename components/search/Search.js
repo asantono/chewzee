@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
+import * as Location from "expo-location";
+import { setLoading } from "../../redux/actions/loadingActions";
 import { goFalse, setRestaurants } from "../../redux/actions/gameActions";
 import useZipToCoordinates from "../../customHooks/zip/useZipToCoordinates";
 import { colors } from "../../variables";
@@ -31,15 +34,43 @@ const Search = (props) => {
     }
   }, [goTo]);
 
-  const onSearch = () => {
+  const getLocation = async () => {
+    let { status } = await Location.requestPermissionsAsync();
+    const loadId = uuid();
+    dispatch(setLoading(loadId));
+    if (status !== "granted") {
+      dispatch(setLoading(loadId));
+      Alert.alert(
+        "zip code search is only available in the United States. Location services are available elsewhere"
+      );
+
+      return;
+    }
+    try {
+      let location = await Location.getCurrentPositionAsync({});
+      dispatch(setLoading(loadId));
+      onSearch(location.coords.latitude, location.coords.longitude);
+    } catch (err) {
+      console.log(err);
+      dispatch(setLoading(loadId));
+      Alert.alert("Error accessing location services");
+    }
+  };
+
+  const onSearch = (autoLat, autoLng) => {
     Keyboard.dismiss();
     try {
-      const { zip, lat, lng } = useZipToCoordinates(text);
-      if (!zip) {
-        Alert.alert("zip code not found");
-        return;
-      }
-      dispatch(setRestaurants(user, lat, lng, zip, start));
+      if (!autoLat) {
+        const { zip, lat, lng } = useZipToCoordinates(text);
+        if (!zip) {
+          Alert.alert("zip code not found");
+          return;
+        }
+        dispatch(setRestaurants(user, lat, lng, zip, start));
+      } else
+        dispatch(
+          setRestaurants(user, autoLat, autoLng, "location services", start)
+        );
     } catch (err) {
       Alert.alert("An error has occured. Please try again later");
       console.log(err);
@@ -60,13 +91,19 @@ const Search = (props) => {
       <TouchableOpacity onPress={() => onSearch()} style={styles.touchable}>
         <Text style={styles.button}>Search</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => getLocation()}
+        style={styles.touchableBlue}
+      >
+        <Text style={styles.button}>Get My Location</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
+    height: 150,
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
@@ -95,6 +132,15 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 20,
     backgroundColor: colors.red,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 900000,
+  },
+  touchableBlue: {
+    width: 300,
+    height: 40,
+    marginTop: 20,
+    backgroundColor: colors.blue,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 900000,

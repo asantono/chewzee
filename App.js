@@ -42,6 +42,7 @@ export default function App() {
   } else {
     firebase.app(); // if already initialized, use that one
   }
+
   return (
     <View style={styles.container}>
       <Provider store={store}>
