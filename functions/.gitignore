@@ -2,6 +2,8 @@ node_modules/
 admin
 admin/
 .admin
+admin.js
+.admin.js
 chewzee-service.json
 chewzee-service
 .chewzee-service

@@ -1,14 +1,23 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 import { colors } from "../../variables";
 
 const Landing = ({ navigation }) => {
+  const { user } = useSelector((state) => state.userReducer);
+  let gamesPlayed = 0;
+  let pageName = "InstructionsFull";
+  if (user.pastGames) {
+    gamesPlayed = user.pastGames.length;
+    gamesPlayed > 2 ? (pageName = "Search") : (pageName = "InstructionsFull");
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.touchableBlue}
-        onPress={() => navigation.navigate("Search")}
+        onPress={() => navigation.navigate(pageName)}
       >
         <Text style={styles.button}>New Game</Text>
       </TouchableOpacity>
@@ -24,6 +33,13 @@ const Landing = ({ navigation }) => {
         onPress={() => navigation.navigate("ActiveGames")}
       >
         <Text style={styles.button}>Active Games</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.touchable}
+        onPress={() => navigation.navigate("InstructionsFull")}
+      >
+        <Text style={styles.button}>Instructions</Text>
       </TouchableOpacity>
     </View>
   );

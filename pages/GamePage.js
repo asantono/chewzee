@@ -18,21 +18,20 @@ const GamePage = ({ navigation }) => {
   const { roundOver } = useSelector((state) => state.gameReducer);
   const { pastGames } = user;
 
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * Math.floor(max));
+  };
+
   // TURN ON FOR ADS
   // useEffect(() => {
   //   if (pastGames.length < 2) return;
   //   if (roundOver) {
   //     let serveAd = getRandomInt(10);
-  //     console.log(serveAd);
-  //     if (serveAd > 5) {
+  //     if (serveAd > 6) {
   //       openInterstitial();
   //     }
   //   }
   // }, [roundOver]);
-
-  const getRandomInt = (max) => {
-    return Math.floor(Math.random() * Math.floor(max));
-  };
 
   const productionID = Platform.select({
     ios: "ca-app-pub-7728765463745066/8856488986",

@@ -62,6 +62,7 @@ const Signup = (props) => {
           onChangeText={(email) => setEmail(email)}
           value={email}
           placeholder="email"
+          autoCapitalize="none"
         />
         <TextInput
           style={styles.textInput}
@@ -69,6 +70,7 @@ const Signup = (props) => {
           value={password}
           placeholder="password"
           secureTextEntry={true}
+          autoCapitalize="none"
         />
         <TouchableOpacity
           style={styles.touchable}

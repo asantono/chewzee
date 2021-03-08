@@ -28,9 +28,7 @@ const Search = (props) => {
   useEffect(() => {
     if (goTo === "addFriend") {
       dispatch(goFalse());
-      if (user.pastGames.length < 2) {
-        navigation.navigate("Instructions");
-      } else navigation.navigate("Friends");
+      navigation.navigate("Friends");
     }
   }, [goTo]);
 
@@ -106,7 +104,8 @@ const styles = StyleSheet.create({
     height: 150,
     alignItems: "center",
     justifyContent: "space-between",
-    width: "100%",
+    // width: "100%",
+    width: 420,
   },
   textInput: {
     height: 40,
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   search: {
-    flex: 1,
+    // flex: 1,
     position: "absolute",
     right: 75,
     top: 7,

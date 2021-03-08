@@ -103,11 +103,9 @@ exports.getUserByEmail = functions.https.onRequest(async (req, res) => {
     // setting error message on the tempFriend.msg property and watching
     // on addFriend to alert
     const bool = await emailSender(email, "join", user);
-    console.log(bool);
     !bool
       ? res.status(404).json({
-          msg:
-            "User not found in database. Please invite them to join chewzee (TRIED EMAIL)",
+          msg: "User not found in database. Please invite them to join chewzee",
         })
       : res.status(404).json({
           msg:
@@ -143,7 +141,7 @@ exports.createUserInDb = functions.auth.user().onCreate((user) => {
 exports.addGameToPlayerTwo = functions.https.onRequest(async (req, res) => {
   try {
     const { user, friend } = req.body;
-    console.log(user.currentGame);
+
     const gameRef = admin
       .database()
       .ref(`users/${friend.uid}/activeGames`)

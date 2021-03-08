@@ -27,7 +27,14 @@ const INITIAL_STATE = {
   },
   userOne: "",
   userTwo: "",
-  workingArray: [{ name: "Finding Food" }, { name: "Finding Food" }],
+  workingArray: [
+    {
+      name: "Waiting for Player 2",
+      cuisines:
+        "After player 2 picks their favorites, you will recieve player 2's choices",
+    },
+    { name: "Waiting for Player 2" },
+  ],
   winnersArray: [],
   workingOffArrayNum: "",
   winner: {},

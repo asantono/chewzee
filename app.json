@@ -10,6 +10,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "primaryColor": "#e74c3c",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -19,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.papasanto.chewzee",
-      "buildNumber": "0.8.4",
+      "buildNumber": "0.8.6",
       "config": {
 "googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
       }

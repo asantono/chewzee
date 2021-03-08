@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, StyleSheet, Text, Platform } from "react-native";
+import { View, StyleSheet, Text, Platform, Dimensions } from "react-native";
 import * as firebase from "firebase";
 import {
   gameUpdate,
@@ -34,6 +34,13 @@ const Game = ({ navigation }) => {
   } = useSelector((state) => state.gameReducer);
   const { user } = useSelector((state) => state.userReducer);
 
+  let heightScaled = 650;
+
+  useEffect(() => {
+    const window = Dimensions.get("window");
+    heightScaled = window.height / window.fontScale;
+  }, []);
+
   if (!user) navigation.replace("Signup");
 
   const [startFade, setStartFade] = useState(false);
@@ -59,7 +66,7 @@ const Game = ({ navigation }) => {
     return () => ref.off("value", listener);
   }, [gameId, newGame]);
 
-  // ALL GAME LOGIC
+  // ALL GAME LOGIC ON PAGE: REST IN GAMEREDUCER
   // Allow the restaurants arrays to shift each round
 
   useEffect(() => {
@@ -176,7 +183,10 @@ const Game = ({ navigation }) => {
         <Text style={styles.roundText}>
           Round: {round === 4 ? "Final Round" : round}
         </Text>
-        <Text style={styles.upperText}>
+        <Text
+          style={styles.upperText}
+          numberOfLines={heightScaled > 900 ? 2 : 1}
+        >
           With: {email} in Zip: {zip}
         </Text>
       </View>
@@ -189,47 +199,70 @@ const Game = ({ navigation }) => {
         </View>
       ) : (
         <FadeOutView
-          style={styles.card}
+          style={
+            workingArray[1].name === "Waiting for Player 2"
+              ? styles.cardCenter
+              : styles.card
+          }
           startFade={startFade}
           setStartFade={setStartFade}
           startFloat={startFloat}
           setStartFloat={setStartFloat}
         >
-          <Text style={styles.title} numberOfLines={2}>
+          <Text style={styles.title} numberOfLines={heightScaled > 900 ? 2 : 1}>
             {workingArray[0].name}
           </Text>
           <Text style={styles.cuisines} numberOfLines={2}>
-            Cuisines: {workingArray[0].cuisines || "Not Listed"}
+            {workingArray[0].name === "Waiting for Player 2"
+              ? workingArray[0].cuisines || "Not Listed"
+              : `Cuisines: ${workingArray[0].cuisines}` || "Not Listed"}
           </Text>
-          <Text style={styles.address} numberOfLines={1}>
-            {workingArray[0].address}
-          </Text>
-          <Text
-            style={styles.phone}
-            numberOfLines={2}
-            onPress={() => phoneLink(workingArray[0].phone_numbers)}
-          >
-            Phone: {phoneNumDisplay(workingArray[0].phone_numbers)}
-          </Text>
-          <Text style={styles.open} numberOfLines={4}>
-            Open: {workingArray[0].timings}
-          </Text>
-          <Text style={styles.open} numberOfLines={1}>
-            Avg price for two: ${workingArray[0].average_cost_for_two}
-          </Text>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={() => {
-              continueGame(workingArray[0]);
-              setStartFadeTwo(true);
-              setStartFloat(true);
-            }}
-          >
-            <Text style={styles.button}>choose me</Text>
-          </TouchableOpacity>
+          {workingArray[0].name === "Waiting for Player 2" ? null : (
+            <Text
+              style={styles.address}
+              numberOfLines={heightScaled > 700 ? 2 : 1}
+            >
+              {workingArray[0].address}
+            </Text>
+          )}
+          {workingArray[0].name === "Waiting for Player 2" ? null : (
+            <Text
+              style={styles.phone}
+              numberOfLines={2}
+              onPress={() => phoneLink(workingArray[0].phone_numbers)}
+            >
+              Phone: {phoneNumDisplay(workingArray[0].phone_numbers)}
+            </Text>
+          )}
+          {workingArray[0].name === "Waiting for Player 2" ? null : (
+            <Text
+              style={styles.open}
+              numberOfLines={heightScaled > 900 ? 5 : 3}
+            >
+              Open: {workingArray[0].timings}
+            </Text>
+          )}
+          {workingArray[0].name === "Waiting for Player 2" ? null : (
+            <Text style={styles.open} numberOfLines={1}>
+              Avg price for two: ${workingArray[0].average_cost_for_two}
+            </Text>
+          )}
+          {workingArray[0].name === "Waiting for Player 2" ? null : (
+            <TouchableOpacity
+              style={styles.touchable}
+              onPress={() => {
+                continueGame(workingArray[0]);
+                setStartFadeTwo(true);
+                setStartFloat(true);
+              }}
+            >
+              <Text style={styles.button}>choose me</Text>
+            </TouchableOpacity>
+          )}
         </FadeOutView>
       )}
-      {workingArray[0].hideButton ? null : (
+
+      {workingArray[1].name === "Waiting for Player 2" ? null : (
         <FadeOutView
           style={styles.card}
           startFade={startFadeTwo}
@@ -237,13 +270,18 @@ const Game = ({ navigation }) => {
           startFloat={startFloatTwo}
           setStartFloat={setStartFloatTwo}
         >
-          <Text style={styles.title} numberOfLines={2}>
+          <Text style={styles.title} numberOfLines={heightScaled > 900 ? 2 : 1}>
             {workingArray[1].name}
           </Text>
+
           <Text style={styles.cuisines} numberOfLines={2}>
             Cuisines: {workingArray[1].cuisines || "Not Listed"}
           </Text>
-          <Text style={styles.address} numberOfLines={1} ellipsizeMode="tail">
+          <Text
+            style={styles.address}
+            numberOfLines={heightScaled > 700 ? 2 : 1}
+            ellipsizeMode="tail"
+          >
             {workingArray[1].address}
           </Text>
           <Text
@@ -253,7 +291,7 @@ const Game = ({ navigation }) => {
           >
             Phone: {phoneNumDisplay(workingArray[1].phone_numbers)}
           </Text>
-          <Text style={styles.open} numberOfLines={4}>
+          <Text style={styles.open} numberOfLines={heightScaled > 900 ? 5 : 3}>
             Open: {workingArray[1].timings}
           </Text>
           <Text style={styles.open} numberOfLines={1}>
@@ -284,7 +322,7 @@ const styles = StyleSheet.create({
   },
   textView: {
     display: "flex",
-    flex: 0.15,
+    flex: 0.17,
     alignItems: "center",
     justifyContent: "space-around",
     alignContent: "center",
@@ -312,6 +350,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
+    width: "96%",
+    marginBottom: 10,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderColor: colors.red,
+    borderWidth: 1,
+  },
+  cardCenter: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     width: "96%",
     marginBottom: 10,
     marginLeft: "auto",

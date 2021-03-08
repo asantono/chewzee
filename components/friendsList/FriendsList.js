@@ -20,13 +20,17 @@ const FriendsList = ({ navigation }) => {
       return;
     }
     addFriendToGame(friend, user);
-    navigation.replace("Game");
+    if (user.pastGames.length) {
+      if (user.pastGames.length < 2) {
+        navigation.navigate("Instructions");
+      } else navigation.replace("Game");
+    } else navigation.navigate("Instructions");
   };
 
   return (
     <View style={styles.container}>
       <Loading />
-      <Text style={styles.title}>Pick A Friend</Text>
+      <Text style={styles.title}>Pick A Friend To Play</Text>
       <FlatList
         data={user.friends}
         initialNumToRender={10}
@@ -49,8 +53,8 @@ const FriendsList = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: 10,
-    height: "70%",
     minWidth: "80%",
     borderStyle: "solid",
     borderWidth: 2,

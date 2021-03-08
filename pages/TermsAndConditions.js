@@ -28,14 +28,14 @@ const LandingPage = ({ navigation }) => {
       </Text>
 
       <Text style={styles.text}>
-        The Chewzee app stores and processes personal data that you have
+        The chewzee app stores and processes personal data that you have
         provided to us, in order to provide my Service. It’s your responsibility
         to keep your phone and access to the app secure. We therefore recommend
         that you do not jailbreak or root your phone, which is the process of
         removing software restrictions and limitations imposed by the official
         operating system of your device. It could make your phone vulnerable to
         malware/viruses/malicious programs, compromise your phone’s security
-        features and it could mean that the Chewzee app won’t work properly or
+        features and it could mean that the chewzee app won’t work properly or
         at all.
       </Text>
 
@@ -63,7 +63,7 @@ const LandingPage = ({ navigation }) => {
         Firebase Crashlytics: https://firebase.google.com/terms/crashlytics
       </Text>
       <Text style={styles.link}>Expo: https://expo.io/terms</Text>
-
+      <Text />
       <Text style={styles.text}>
         You should be aware that there are certain things that Anthony
         Santonocito will not take responsibility for. Certain functions of the
@@ -143,7 +143,7 @@ const LandingPage = ({ navigation }) => {
 
       <Text style={styles.title}>Privacy Policy</Text>
       <Text style={styles.text}>
-        Anthony Santonocito built the Chewzee app as a Free app. This SERVICE is
+        Anthony Santonocito built the chewzee app as a Free app. This SERVICE is
         provided by Anthony Santonocito at no cost and is intended for use as
         is.
       </Text>
@@ -164,7 +164,7 @@ const LandingPage = ({ navigation }) => {
 
       <Text style={styles.text}>
         The terms used in this Privacy Policy have the same meanings as in our
-        Terms and Conditions, which is accessible at Chewzee unless otherwise
+        Terms and Conditions, which is accessible at chewzee unless otherwise
         defined in this Privacy Policy.
       </Text>
 

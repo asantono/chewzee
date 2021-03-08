@@ -11,12 +11,15 @@ web-build/
 ./firebase.js
 /firebase.js
 functions/admin
+functions/admin.js
 functions/chewzee-service.json
 functions/chewzee-service
 /chewzee-service.json
 /chewzee-service
 chewzee-service
 chewzee-service.json
+/admin.js
+/admin
 
 # macOS
 .DS_Store

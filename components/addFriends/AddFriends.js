@@ -51,7 +51,7 @@ const AddFriends = () => {
         autoCapitalize="none"
       />
       <TouchableOpacity onPress={() => onFindFriend()} style={styles.touchable}>
-        <Text style={styles.button}>Find Friend</Text>
+        <Text style={styles.button}>Find A New Friend</Text>
       </TouchableOpacity>
       {tempFriend.email ? (
         <TouchableOpacity
@@ -59,7 +59,9 @@ const AddFriends = () => {
           onPress={() => onFollow()}
         >
           <Text style={styles.found}>Found: {tempFriend.email}</Text>
-          <Text style={styles.foundBlue}>Add Friend</Text>
+          <Text style={styles.foundBlue} numberOfLines={2}>
+            Add {tempFriend.email} to your friend list
+          </Text>
         </TouchableOpacity>
       ) : null}
     </View>
@@ -68,9 +70,10 @@ const AddFriends = () => {
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: "30%",
-    minHeight: "15%",
-    paddingTop: 10,
+    flex: 0.6,
+    // maxHeight: "30%",
+    // minHeight: "15%",
+    paddingTop: 20,
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
@@ -104,16 +107,17 @@ const styles = StyleSheet.create({
     // backgroundColor: colors.pink,
   },
   found: {
-    marginTop: 10,
+    marginTop: 20,
     fontSize: 16,
     fontWeight: "800",
-    height: 30,
+    height: 20,
   },
   foundBlue: {
     marginTop: 10,
-    fontSize: 20,
+    fontSize: 16,
     color: colors.blueDark,
     fontWeight: "800",
+    paddingBottom: 30,
   },
   button: {
     flex: 1,

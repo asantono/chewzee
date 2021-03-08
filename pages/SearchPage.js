@@ -26,8 +26,14 @@ const SearchPage = ({ navigation }) => {
       onPress={() => Keyboard.dismiss()}
     >
       <Text style={styles.title}>Enter A Zip Code</Text>
-      <Text style={styles.text}>Chewzee will find you nearby restaurants</Text>
+      <Text style={styles.text}>chewzee will find you nearby restaurants</Text>
       <Search navigation={navigation} />
+      <Text style={styles.textBottomTop}>
+        Zip search is limited to the United States
+      </Text>
+      <Text style={styles.textBottom}>
+        Get My Location works all over the world
+      </Text>
     </KeyboardAvoidingView>
   );
 };
@@ -39,6 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     height: "100%",
+    marginBottom: 20,
   },
   title: {
     fontSize: 25,
@@ -50,6 +57,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     paddingBottom: 20,
+  },
+  textBottom: {
+    fontSize: 14,
+    fontWeight: "400",
+    paddingTop: 16,
+    fontStyle: "italic",
+  },
+  textBottomTop: {
+    fontSize: 14,
+    fontWeight: "400",
+    paddingTop: 30,
+    fontStyle: "italic",
   },
 });
 

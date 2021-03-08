@@ -3,7 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../../variables";
 
-const Instructions = ({ navigation }) => {
+const InstructionsFull = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View
@@ -12,37 +12,32 @@ const Instructions = ({ navigation }) => {
           justifyContent: "center",
         }}
       >
-        <Text style={styles.title}>There are 16 restaurants!</Text>
+        <Text style={styles.title}>Here's how it works</Text>
         <View style={{ marginTop: 15 }}>
+          <Text style={styles.textStrike}>1: What do you want to eat?</Text>
+          <Text style={styles.textStrike}>
+            2: I don't know. What do you want to eat?
+          </Text>
+          <Text style={styles.text}>1: Search nearby restaurants</Text>
+          <Text style={styles.text}>2: Pick your partner</Text>
           <Text style={styles.text}>
-            Step 1: Choose your favorites from pairs of two
+            3: Pick your preferred restaurant from each pair of restaurants
+            shown
           </Text>
           <Text style={styles.text}>
-            Step 2: Your friend will choose their favorites
+            4: Your partner picks from your choices
           </Text>
           <Text style={styles.text}>
-            Step 3: Rep
-            <Text style={{ fontWeight: "800", color: colors.red }}>eat</Text>
+            5: You pick from your partners choices
           </Text>
-          <Text style={styles.text}>
-            Step 4:{" "}
-            <Text
-              style={{
-                textDecorationLine: "line-through",
-                textDecorationStyle: "solid",
-              }}
-            >
-              Rep
-            </Text>
-            <Text style={{ fontWeight: "800", color: colors.red }}>eat</Text>
-          </Text>
+          <Text style={styles.text}>6: Repeat, repeat, then eat</Text>
         </View>
       </View>
       <TouchableOpacity
         style={styles.touchable}
-        onPress={() => navigation.navigate("Game")}
+        onPress={() => navigation.navigate("Search")}
       >
-        <Text style={styles.button}>Let's Play!</Text>
+        <Text style={styles.button}>Let's Start!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -54,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-
-    marginBottom: 80,
+    padding: 15,
+    marginBottom: 30,
   },
   touchable: {
     width: 300,
@@ -77,6 +72,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     paddingBottom: 20,
   },
+  textStrike: {
+    fontSize: 16,
+    fontWeight: "600",
+    paddingBottom: 20,
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+  },
 
   button: {
     flex: 1,
@@ -88,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Instructions;
+export default InstructionsFull;

@@ -10,7 +10,6 @@ import {
   import Constants from 'expo-constants';
 
   export const openInterstitial = async () => {
-      console.log("openInterstitial")
     try {
         await AdMobInterstitial.setAdUnitID(adUnitID);
         await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true});

@@ -17,7 +17,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import SearchPage from "./pages/SearchPage";
 import Options from "./pages/OptionsPage";
-import Card from "./components/card/Card";
 import Signup from "./components/signup/Signup";
 
 import { firebaseConfig } from "./firebase";
@@ -33,6 +32,7 @@ import LandingPage from "./pages/LandingPage";
 import InstructionsPage from "./pages/InstructionsPage";
 import PastGameRecapPage from "./pages/PastGameRecapPage";
 import TermsAndConditions from "./pages/TermsAndConditions";
+import InstructionsFullPage from "./pages/InstructionsFullPage";
 
 LogBox.ignoreLogs(["Setting a timer"]);
 
@@ -45,6 +45,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       <Provider store={store}>
         <Listen />
         <UserListener />
@@ -59,6 +60,16 @@ const Tab = createBottomTabNavigator();
 const TabNav = () => {
   return (
     <Tab.Navigator
+      // tabBarOptions={{
+      //   showLabel: false,
+      //   tabStyle: {
+      //     flexDirection: "row",
+
+      //     // alignItems: "center",
+      //     // justifyContent: "space-around",
+      //     // alignContent: "space-around",
+      //   },
+      // }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -84,7 +95,11 @@ const TabNav = () => {
               name={iconName}
               size={size}
               color={color}
-              style={{ marginTop: 12, height: "100%" }}
+              style={{
+                marginTop: 12,
+                height: "100%",
+                width: 38,
+              }}
             />
           );
         },
@@ -185,6 +200,10 @@ const Nav = () => {
         <Stack.Screen
           name="TermsAndConditions"
           component={TermsAndConditions}
+        />
+        <Stack.Screen
+          name="InstructionsFull"
+          component={InstructionsFullPage}
         />
       </Stack.Navigator>
     </NavigationContainer>
