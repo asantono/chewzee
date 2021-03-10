@@ -1,5 +1,7 @@
 import { NOTIFICATION } from "../types";
 
+// NOT CURRENTLY IN APP BUT MAYBE A FUTURE RELEASE
+
 export const pushNotification = (notification) => {
   let body = "",
     title = "";

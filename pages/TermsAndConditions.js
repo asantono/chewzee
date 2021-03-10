@@ -1,9 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Landing from "../components/landing/Landing";
 
-const LandingPage = ({ navigation }) => {
+const TermsAndConditions = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Terms & Conditions</Text>
@@ -322,4 +321,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LandingPage;
+export default TermsAndConditions;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, StyleSheet, Text, Platform, Dimensions } from "react-native";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 import * as firebase from "firebase";
 import {
   gameUpdate,
@@ -24,7 +24,6 @@ const Game = ({ navigation }) => {
     restaurants,
     gameId,
     userOne,
-    userTwo,
     workingArray,
     winnersArray,
     workingOffArrayNum,
@@ -63,7 +62,9 @@ const Game = ({ navigation }) => {
         );
       }
     });
-    return () => ref.off("value", listener);
+    return () => {
+      ref.off("value", listener);
+    };
   }, [gameId, newGame]);
 
   // ALL GAME LOGIC ON PAGE: REST IN GAMEREDUCER
@@ -333,7 +334,6 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   roundText: {
-    // flex: 1,
     fontSize: 20,
     color: colors.red,
     fontWeight: "800",
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   title: {
-    fontSize: Platform.OS === "ios" ? 35 : 30,
+    fontSize: 30,
     marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
@@ -427,7 +427,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 25,
     color: colors.white,
-    // marginTop: 5,
     height: "100%",
     alignSelf: "center",
   },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TextInput, Alert } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { View, StyleSheet, Text } from "react-native";
+import { useSelector } from "react-redux";
 import * as firebase from "firebase";
 import * as Linking from "expo-linking";
 import { colors } from "../../variables";
@@ -9,7 +9,6 @@ import PastGameRecapList from "./PastGameRecapList";
 
 const PastGameRecap = () => {
   const { gameId } = useSelector((state) => state.gameReducer);
-  const [fullGame, setFullGame] = useState({});
   const [gameWinner, setGameWinner] = useState({});
   const [gameRestaurants, setGameRestaurants] = useState([]);
 
@@ -18,10 +17,13 @@ const PastGameRecap = () => {
       .database()
       .ref("games/" + gameId)
       .once("value");
-    let res = gameVal.val();
-    setFullGame(res);
-    setGameWinner(res.winner);
-    setGameRestaurants(res.restaurants.fullArr);
+    if (gameVal.exists()) {
+      let res = gameVal.val();
+      setGameWinner(res.winner);
+      setGameRestaurants(res.restaurants.fullArr);
+    }
+    setGameWinner("Game Not Found");
+    setGameRestaurants([]);
   };
 
   useEffect(() => {

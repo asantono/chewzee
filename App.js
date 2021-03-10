@@ -11,14 +11,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { Ionicons } from "@expo/vector-icons";
-
 import { colors } from "./variables";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import SearchPage from "./pages/SearchPage";
 import Options from "./pages/OptionsPage";
 import Signup from "./components/signup/Signup";
-
 import { firebaseConfig } from "./firebase";
 import * as firebase from "firebase";
 import "firebase/functions";
@@ -40,6 +37,7 @@ export default function App() {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   } else {
+    console.log(firebase.apps.length);
     firebase.app(); // if already initialized, use that one
   }
 
@@ -60,16 +58,6 @@ const Tab = createBottomTabNavigator();
 const TabNav = () => {
   return (
     <Tab.Navigator
-      // tabBarOptions={{
-      //   showLabel: false,
-      //   tabStyle: {
-      //     flexDirection: "row",
-
-      //     // alignItems: "center",
-      //     // justifyContent: "space-around",
-      //     // alignContent: "space-around",
-      //   },
-      // }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -88,8 +76,6 @@ const TabNav = () => {
             size = 34;
             iconName = focused ? "people-sharp" : "people-outline";
           }
-
-          // You can return any component that you like here!
           return (
             <Ionicons
               name={iconName}

@@ -15,7 +15,9 @@ const UserListener = () => {
       if (snapshot.exists()) dispatch(userUpdate(snapshot.val()));
     });
 
-    return () => ref.off("value", listener);
+    return () => {
+      ref.off("value", listener);
+    };
   }, [user.uid]);
 
   return <View style={styles.container} />;

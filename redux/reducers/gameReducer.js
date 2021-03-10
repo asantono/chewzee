@@ -1,4 +1,3 @@
-import { newGameFalse } from "../actions/gameActions";
 import {
   SET_GAME_ID,
   GAME_UPDATE,
@@ -13,6 +12,7 @@ import {
   NEW_GAME_FALSE,
   NEW_GAME_TRUE,
   ROUND_OVER,
+  RESET_GAME,
   LOGOUT,
 } from "../types";
 
@@ -55,6 +55,24 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         gameId: payload.gameId,
         gameOverId: payload.gameOverId,
         zip: payload.zip,
+        userOne: INITIAL_STATE.userOne,
+        userTwo: INITIAL_STATE.userTwo,
+        newGame: INITIAL_STATE.newGame,
+        winner: INITIAL_STATE.winner,
+        workingArray: INITIAL_STATE.workingArray,
+        round: INITIAL_STATE.round,
+        winnersArray: INITIAL_STATE.winnersArray,
+        lastWinner: INITIAL_STATE.lastWinner,
+      };
+    // This case ensures a new game is triggered on the first render
+    // This was not an issue in BETA Testing but was an issue with
+    // the ios simulator
+    case RESET_GAME:
+      return {
+        ...state,
+        gameId: INITIAL_STATE.gameId,
+        gameOverId: INITIAL_STATE.gameOverId,
+        zip: INITIAL_STATE.zip,
         userOne: INITIAL_STATE.userOne,
         userTwo: INITIAL_STATE.userTwo,
         newGame: INITIAL_STATE.newGame,
@@ -298,230 +316,6 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         default:
           break;
       }
-
-    // switch (round) {
-    //   case 1:
-    //     // userOne gets arr1
-    //     // userTwo gets arr2
-    //     // if the newGame prop is not true, return
-    //     if (!state.newGame) {
-    //       return {
-    //         ...state,
-    //         restaurants: game.restaurants,
-    //         round: game.round,
-    //         winner: game.winner || INITIAL_STATE.winner,
-    //       };
-    //     }
-    //     // Assign arr1 to userOne after checking that the round is not over
-    //     if (userOne === user.uid) {
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr1.length === 4) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       } else {
-    //         // userOne gets arr1 here:
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr1,
-    //           workingOffArrayNum: 1,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     } else {
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr2.length === 4) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //       // Assign arr2 to userTwo after checking that the round is not over
-    //        else {
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr2,
-    //           workingOffArrayNum: 2,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     }
-    //   case 2:
-    //     // SAME PROCESS: DIFFERENT VARIABLES: REFACTOR THIS
-    //     // userOne gets arr2
-    //     // userTwo gets arr1
-    //     if (!state.newGame) {
-    //       return {
-    //         ...state,
-    //         restaurants: game.restaurants,
-    //         round: game.round,
-    //         winner: game.winner || INITIAL_STATE.winner,
-    //       };
-    //     }
-    //     if (userTwo === user.uid) {
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr1.length === 2) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       } else {
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr1,
-    //           workingOffArrayNum: 1,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     } else {
-    //       console.log("PLACE 2");
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr2.length === 2) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       } else {
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr2,
-    //           workingOffArrayNum: 2,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     }
-    //   case 3:
-    //     if (!state.newGame) {
-    //       console.log("first if");
-    //       return {
-    //         ...state,
-    //         restaurants: game.restaurants,
-    //         round: game.round,
-    //         winner: game.winner,
-    //       };
-    //     }
-    //     if (userOne === user.uid) {
-    //       console.log("PLACE 1");
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr1.length === 1) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       } else {
-    //         console.log("IN ELSE");
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr1,
-    //           workingOffArrayNum: 1,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     } else {
-    //       console.log("PLACE 2");
-    //       // Check that picks were not already made and set to empty array if they were
-    //       if (restaurants.arr2.length === 1) {
-    //         return {
-    //           ...state,
-    //           workingArray: INITIAL_STATE.workingArray,
-    //           workingOffArrayNum: state.workingOffArrayNum,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       } else {
-    //         return {
-    //           ...state,
-    //           workingArray: restaurants.arr2,
-    //           workingOffArrayNum: 2,
-    //           newGame: false,
-    //           restaurants: game.restaurants,
-    //           userOne: game.userOne,
-    //           userTwo: game.userTwo || "",
-    //           winner: game.winner || INITIAL_STATE.winner,
-    //           round: game.round,
-    //         };
-    //       }
-    //     }
-    //   case 4:
-    //     // Give userTwo the final choice
-    //     if (userTwo === user.uid && restaurants.arr1.length === 1) {
-    //       return {
-    //         ...state,
-    //         workingArray: [...restaurants.arr1, ...restaurants.arr2],
-    //         restaurants: game.restaurants,
-    //         round: game.round,
-    //         winner: game.winner,
-    //       };
-    //     } else {
-    //       return {
-    //         ...state,
-    //         restaurants: game.restaurants,
-    //         round: game.round,
-    //         winner: game.winner,
-    //       };
-    //     }
-    //   default:
-    //     break;
-    // }
 
     default:
       return state;

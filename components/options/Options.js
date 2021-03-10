@@ -11,7 +11,7 @@ const Options = ({ navigation }) => {
     logout();
   };
 
-  const { user } = useSelector((state) => state.userReducer);
+  let { user } = useSelector((state) => state.userReducer);
   const { start } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
   if (!user) user = {};

@@ -34,13 +34,6 @@ const Landing = ({ navigation }) => {
       >
         <Text style={styles.button}>Active Games</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.touchable}
-        onPress={() => navigation.navigate("InstructionsFull")}
-      >
-        <Text style={styles.button}>Instructions</Text>
-      </TouchableOpacity>
     </View>
   );
 };

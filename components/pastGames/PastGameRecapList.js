@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet, Text, FlatList, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../../variables";
 
 const PastGameRecapList = ({ title, list }) => {
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     fontSize: 18,
     fontWeight: "800",
-    // height: 34,
     width: "100%",
     textAlign: "center",
     borderStyle: "solid",
@@ -58,7 +56,6 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 4,
     marginVertical: 8,
-    // marginHorizontal: 16,
     backgroundColor: colors.red,
   },
 });

@@ -9,12 +9,12 @@ import {
   GO_FALSE,
   GO_TRUE,
   RESET_WINNER,
-  NOTIFICATION,
   UPDATE_CURRENT_GAME,
   UPDATE_START,
   NEW_GAME_FALSE,
   NEW_GAME_TRUE,
   ROUND_OVER,
+  RESET_GAME,
 } from "../types";
 import { setLoading } from "./loadingActions";
 
@@ -37,6 +37,7 @@ export const setRestaurants = (user, lat, lng, zip, start) => async (
   dispatch(setLoading(loadId));
   dispatch(setWorkingArray([]));
   dispatch(setWinnersArray([]));
+  dispatch({ type: RESET_GAME });
   if (!start) start = 0;
   let end = start + 20;
   try {

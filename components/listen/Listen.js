@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import * as firebase from "firebase";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdate, noUser } from "../../redux/actions/userActions";
 
 const Listen = () => {
   const { user } = useSelector((state) => state.userReducer);
-  //   const { email, fake } = user;
   const dispatch = useDispatch();
 
   useEffect(() => {

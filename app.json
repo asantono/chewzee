@@ -20,14 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.papasanto.chewzee",
-      "buildNumber": "0.8.6",
+      "buildNumber": "0.8.7",
       "config": {
 "googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
       }
     },
     "android": {
       "package": "com.papasanto.chewzee",
-      "versionCode": 2,
+      "versionCode": 3,
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/question-mark-adaptive.png",

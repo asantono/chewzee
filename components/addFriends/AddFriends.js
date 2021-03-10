@@ -71,8 +71,6 @@ const AddFriends = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 0.6,
-    // maxHeight: "30%",
-    // minHeight: "15%",
     paddingTop: 20,
     alignItems: "center",
     justifyContent: "space-around",
@@ -104,7 +102,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: colors.pink,
   },
   found: {
     marginTop: 20,

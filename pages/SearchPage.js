@@ -13,18 +13,8 @@ const SearchPage = ({ navigation }) => {
     }
   }, [user.uid]);
 
-  const DismissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      {children}
-    </TouchableWithoutFeedback>
-  );
-
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      onPress={() => Keyboard.dismiss()}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.title}>Enter A Zip Code</Text>
       <Text style={styles.text}>chewzee will find you nearby restaurants</Text>
       <Search navigation={navigation} />

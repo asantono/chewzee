@@ -18,6 +18,7 @@ export const UPDATE_START = "UPDATE_START";
 export const NEW_GAME_FALSE = "NEW_GAME_FALSE";
 export const NEW_GAME_TRUE = "NEW_GAME_TRUE";
 export const ROUND_OVER = "ROUND_OVER";
+export const RESET_GAME = "RESET_GAME";
 
 export const NOTIFICATION = "NOTIFICATION";
 

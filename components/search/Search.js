@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
     height: 150,
     alignItems: "center",
     justifyContent: "space-between",
-    // width: "100%",
     width: 420,
   },
   textInput: {
@@ -119,7 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   search: {
-    // flex: 1,
     position: "absolute",
     right: 75,
     top: 7,

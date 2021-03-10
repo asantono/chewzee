@@ -1,9 +1,7 @@
-// const firebase = require("firebase");
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const fetch = require("node-fetch");
 const express = require("express");
-const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const { htmlToText } = require("html-to-text");
 const { formatRes, shuffle } = require("./controllers/helperFunctions");
@@ -20,11 +18,7 @@ require("cors")({
   origin: true,
 });
 
-app.use(bodyParser.json());
-
-// app.use((req, res, next) => {
-//   next();
-// });
+app.use(express.json());
 
 const zomatoKey = functions.config().chewzee.zomatokey;
 const sendGridKey = functions.config().sendgrid.key;
@@ -265,36 +259,3 @@ const emailSender = async (email, type, user, url) => {
     return false;
   }
 };
-
-// exports.deleteActiveGame = functions.https.onRequest(async (req, res) => {
-//   const { user, game } = req.body;
-//   try {
-//     admin
-//       .database()
-//       .ref(`users/${user.uid}/activeGames/${game.gameOverId}`)
-//       .remove();
-//     admin.database().ref(`games/${game.gameId}`).remove();
-//     let secondId = game.userOne ? game.userOne : game.userTwo;
-//     if (secondId) {
-//       const ref = admin.database().ref(`users/${secondId}/activeGames`);
-//       const res = await ref.once("value");
-//       const userTwoGames = await res.val();
-//       let deleteVal;
-//       for (let prop in userTwoGames) {
-//         if (userTwoGames[prop].gameId === game.gameId) {
-//           deleteVal = userTwoGames[prop].gameOverId;
-//         }
-//       }
-//       if (deleteVal) {
-//         admin
-//           .database()
-//           .ref(`users/${secondId}/activeGames/${deleteVal}`)
-//           .remove();
-//       }
-//     }
-//     res.status(200).json({ success: "success" });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json({ error: err, msg: "Add failed. Try again later" });
-//   }
-// });

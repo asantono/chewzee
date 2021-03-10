@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import { colors } from "../../variables";
 
@@ -16,8 +15,6 @@ const GameList = ({ title, list, func, icon, iconFunc }) => {
         renderItem={({ item }) => (
           <View style={styles.item} key={item.uid}>
             <TouchableOpacity
-              // key={item.uid}
-              // style={styles.item}
               onPress={(e) => {
                 func(item);
               }}
@@ -39,7 +36,6 @@ const GameList = ({ title, list, func, icon, iconFunc }) => {
               >
                 <View style={styles.delete}>
                   <Text style={styles.deleteText}>Delete</Text>
-                  {/* <AntDesign name="delete" size={30} color="white" /> */}
                 </View>
               </TouchableOpacity>
             )}
@@ -103,7 +99,6 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 4,
     marginVertical: 8,
-    // marginHorizontal: 16,
     backgroundColor: colors.black,
   },
 });

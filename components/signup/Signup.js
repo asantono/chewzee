@@ -51,12 +51,7 @@ const Signup = (props) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-
-        //{Platform.OS === "ios" ? "padding" : null}
-      >
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <TextInput
           style={styles.textInput}
           onChangeText={(email) => setEmail(email)}

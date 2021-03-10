@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import AddFriends from "../components/addFriends/AddFriends";
 import FriendsList from "../components/friendsList/FriendsList";
 import { useSelector } from "react-redux";
