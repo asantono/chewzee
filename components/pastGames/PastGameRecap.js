@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as firebase from "firebase";
 import * as Linking from "expo-linking";
 import { colors } from "../../variables";
 import { phoneNumFormat } from "../../utils/phoneNumFormat/phoneNumFormat";
 import PastGameRecapList from "./PastGameRecapList";
+import { resetWinner } from "../../redux/actions/gameActions";
 
 const PastGameRecap = () => {
   const { gameId } = useSelector((state) => state.gameReducer);
   const [gameWinner, setGameWinner] = useState({});
   const [gameRestaurants, setGameRestaurants] = useState([]);
+
+  const dispatch = useDispatch();
 
   const getGame = async () => {
     const gameVal = await firebase
@@ -21,13 +24,15 @@ const PastGameRecap = () => {
       let res = gameVal.val();
       setGameWinner(res.winner);
       setGameRestaurants(res.restaurants.fullArr);
+    } else {
+      setGameWinner("Game Not Found");
+      setGameRestaurants([]);
     }
-    setGameWinner("Game Not Found");
-    setGameRestaurants([]);
   };
 
   useEffect(() => {
     getGame();
+    dispatch(resetWinner());
   }, [gameId]);
 
   const phoneLink = (num) => {

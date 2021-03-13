@@ -44,7 +44,7 @@ exports.searchZomato = functions.https.onRequest(async (req, res) => {
     const newGameRef = admin.database().ref("games").push();
     const key = newGameRef.key;
     const gameInitiated = Date.now();
-    newGameRef.set({
+    const funcOne = newGameRef.set({
       restaurants: shuffledData,
       userOne: user.uid,
       userOneEmail: user.email,
@@ -57,11 +57,17 @@ exports.searchZomato = functions.https.onRequest(async (req, res) => {
       .ref("users/" + user.uid + "/activeGames")
       .push();
     const gameKey = gameRef.key;
-    gameRef.set({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
-    admin
+    const funcTwo = gameRef.set({
+      gameId: key,
+      gameOverId: gameKey,
+      zip: zip,
+      gameInitiated,
+    });
+    const funcThree = admin
       .database()
       .ref(`users/${user.uid}/currentGame`)
       .set({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
+    Promise.all([funcOne, funcTwo, funcThree]);
     res
       .status(200)
       .json({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
@@ -125,23 +131,22 @@ exports.createUserInDb = functions.auth.user().onCreate((user) => {
       .ref("users/" + user.uid)
       .set(newUser);
 
-    user.sendEmailVerification();
+    // user.sendEmailVerification();
   } catch (err) {
     console.log(err);
-    res.status(404).json({ msg: "user creation failed" });
   }
 });
 
 exports.addGameToPlayerTwo = functions.https.onRequest(async (req, res) => {
   try {
-    const { user, friend } = req.body;
+    const { friend, user } = req.body;
 
     const gameRef = admin
       .database()
       .ref(`users/${friend.uid}/activeGames`)
       .push();
     const gameKey = gameRef.key;
-    gameRef.set({
+    await gameRef.set({
       gameId: user.currentGame.gameId,
       gameOverId: gameKey,
       zip: user.currentGame.zip,
@@ -184,7 +189,7 @@ exports.deleteActiveFromPlayerTwo = functions.https.onRequest(
 exports.addFollowToFriend = functions.https.onRequest(async (req, res) => {
   try {
     const { user, tempFriend } = req.body;
-    admin
+    await admin
       .database()
       .ref("users/" + tempFriend.uid + "/followers")
       .push({
@@ -192,8 +197,10 @@ exports.addFollowToFriend = functions.https.onRequest(async (req, res) => {
         uid: user.uid,
         pushToken: user.pushToken || "",
       });
+    res.status(201).json({ message: "Success" });
   } catch (err) {
     console.log(err);
+    res.status(400).json({ message: "Failed" });
   }
 });
 

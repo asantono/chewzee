@@ -86,7 +86,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         workingArray: payload.arr.length
-          ? payload.arr
+          ? [...payload.arr]
           : INITIAL_STATE.workingArray,
         workingOffArrayNum: payload.num || state.workingOffArrayNum,
       };
@@ -183,10 +183,13 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         };
       };
 
+      // I am creating new arrays for working arrays
+      // this likely isn't necessary. Consider refactor
+      // in later version
       const assignArrayOne = () => {
         return {
           ...state,
-          workingArray: restaurants.arr1,
+          workingArray: [...restaurants.arr1],
           workingOffArrayNum: 1,
           newGame: false,
           restaurants: game.restaurants,
@@ -201,7 +204,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
       const assignArrayTwo = () => {
         return {
           ...state,
-          workingArray: restaurants.arr2,
+          workingArray: [...restaurants.arr2],
           workingOffArrayNum: 2,
           newGame: false,
           restaurants: game.restaurants,

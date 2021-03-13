@@ -27,12 +27,13 @@ export const addFollow = async (user, tempFriend) => {
     const firebaseFunc =
       "https://us-central1-chewzee-2bf67.cloudfunctions.net/addFollowToFriend";
     const headers = { "Content-type": "application/json" };
-    fetch(firebaseFunc, {
+    await fetch(firebaseFunc, {
       method: "POST",
       headers,
       body: body,
     });
   } catch (err) {
+    console.log(err);
     Alert.alert("Add failed. Try again later");
   }
 };
@@ -40,15 +41,6 @@ export const addFollow = async (user, tempFriend) => {
 export const addFriendToGame = async (friend, user) => {
   try {
     let body = { friend, user };
-    body = JSON.stringify(body);
-    const firebaseFunc =
-      "https://us-central1-chewzee-2bf67.cloudfunctions.net/addGameToPlayerTwo";
-    const headers = { "Content-type": "application/json" };
-    fetch(firebaseFunc, {
-      method: "POST",
-      headers,
-      body: body,
-    });
     const ref = firebase.database().ref(`games/${user.currentGame.gameId}`);
     let game = await ref.once("value");
     game = await game.val();
@@ -56,6 +48,7 @@ export const addFriendToGame = async (friend, user) => {
       Alert.alert(
         `You currently have an opponent. Please start a new game to play with ${friend.email}`
       );
+      return 0;
     }
     ref.update({
       userTwo: friend.uid,
@@ -72,8 +65,17 @@ export const addFriendToGame = async (friend, user) => {
         userTwo: friend.uid,
         userTwoEmail: friend.email,
       });
+    body = JSON.stringify(body);
+    const firebaseFunc =
+      "https://us-central1-chewzee-2bf67.cloudfunctions.net/addGameToPlayerTwo";
+    const headers = { "Content-type": "application/json" };
+    await fetch(firebaseFunc, {
+      method: "POST",
+      headers,
+      body: body,
+    });
     if (friend.pushToken) {
-      await sendPushNotification(friend.pushToken);
+      sendPushNotification(friend.pushToken);
     }
   } catch (err) {
     console.log(err);
@@ -104,12 +106,14 @@ export const newCurrentGame = (user, game) => {
 
 export const updateRound = async (user, round) => {
   try {
-    firebase
+    await firebase
       .database()
       .ref(`games/${user.currentGame.gameId}`)
-      .update({ round: round });
+      .update({ round });
+    return 1;
   } catch (err) {
     console.log(err);
+    return 0;
   }
 };
 
@@ -172,4 +176,8 @@ export const deleteActiveGame = async (user, game, dispatch) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const deleteAllGames = async () => {
+  firebase.database().ref(`games`).remove();
 };

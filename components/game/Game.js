@@ -62,17 +62,14 @@ const Game = ({ navigation }) => {
         );
       }
     });
-    return () => {
-      ref.off("value", listener);
-    };
-  }, [gameId, newGame]);
+    return () => ref.off("value", listener);
+  }, [gameId]);
 
   // ALL GAME LOGIC ON PAGE: REST IN GAMEREDUCER
   // Allow the restaurants arrays to shift each round
 
   useEffect(() => {
     if (winner.name) {
-      dispatch(resetWinner());
       gameOver(user);
       navigation.replace("Recap");
       return;
@@ -83,21 +80,21 @@ const Game = ({ navigation }) => {
       switch (round) {
         case 1:
           if (restaurants.arr1.length === 4) {
-            newRound = round + 1;
+            newRound = 2;
             dispatch(newGameTrue());
             updateRound(user, newRound);
           }
           break;
         case 2:
           if (restaurants.arr1.length === 2) {
-            newRound = round + 1;
+            newRound = 3;
             dispatch(newGameTrue());
             updateRound(user, newRound);
           }
           break;
         case 3:
           if (restaurants.arr1.length === 1) {
-            newRound = round + 1;
+            newRound = 4;
             dispatch(newGameTrue());
             updateRound(user, newRound);
           }

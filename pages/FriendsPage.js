@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import AddFriends from "../components/addFriends/AddFriends";
 import FriendsList from "../components/friendsList/FriendsList";
 import { useSelector } from "react-redux";
+import UserListener from "../components/listen/UserListener";
 
 const FriendsPage = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -14,8 +15,9 @@ const FriendsPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <FriendsList navigation={navigation} />
+      <UserListener />
       <AddFriends navigation={navigation} />
+      <FriendsList navigation={navigation} />
     </View>
   );
 };
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-around",
-    paddingTop: 20,
+
     paddingBottom: 20,
   },
 });

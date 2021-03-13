@@ -37,7 +37,6 @@ export const setRestaurants = (user, lat, lng, zip, start) => async (
   dispatch(setLoading(loadId));
   dispatch(setWorkingArray([]));
   dispatch(setWinnersArray([]));
-  dispatch({ type: RESET_GAME });
   if (!start) start = 0;
   let end = start + 20;
   try {
@@ -54,6 +53,11 @@ export const setRestaurants = (user, lat, lng, zip, start) => async (
       body: body,
     });
     res = await res.json();
+    if (res.status === "timeout") {
+      Alert.alert("Error communicating with server. Please try again later");
+      dispatch(setLoading(loadId));
+      return;
+    }
     dispatch({ type: SET_GAME_ID, payload: res });
     dispatch(goTrue("addFriend"));
     dispatch(setLoading(loadId));

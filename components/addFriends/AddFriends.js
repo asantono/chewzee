@@ -39,8 +39,7 @@ const AddFriends = () => {
     addFollow(user, tempFriend);
   };
   return (
-    <View style={styles.container}>
-      <Loading />
+    <View style={tempFriend.email ? styles.containerFull : styles.container}>
       <TextInput
         style={styles.textInput}
         onChangeText={(email) => setEmail(email)}
@@ -70,11 +69,18 @@ const AddFriends = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.6,
-    paddingTop: 20,
+    flex: 0.35,
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
+    paddingTop: 10,
+  },
+  containerFull: {
+    flex: 0.6,
+    alignItems: "center",
+    justifyContent: "space-around",
+    width: "100%",
+    paddingTop: 10,
   },
   textInput: {
     height: 40,
@@ -90,31 +96,25 @@ const styles = StyleSheet.create({
   touchable: {
     width: 300,
     height: 40,
-    marginTop: 20,
     backgroundColor: colors.red,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 900000,
+    borderRadius: 900,
   },
   touchableTwo: {
     width: 300,
-    height: 80,
-    marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
   },
   found: {
-    marginTop: 20,
     fontSize: 16,
     fontWeight: "800",
     height: 20,
   },
   foundBlue: {
-    marginTop: 10,
     fontSize: 16,
     color: colors.blueDark,
     fontWeight: "800",
-    paddingBottom: 30,
   },
   button: {
     flex: 1,

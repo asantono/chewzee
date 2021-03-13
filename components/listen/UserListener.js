@@ -12,7 +12,10 @@ const UserListener = () => {
     const ref = firebase.database().ref("users/" + user.uid);
     if (!user.uid) return;
     const listener = ref.on("value", (snapshot) => {
-      if (snapshot.exists()) dispatch(userUpdate(snapshot.val()));
+      if (snapshot.exists()) {
+        let snap = snapshot.val();
+        dispatch(userUpdate(snap));
+      }
     });
 
     return () => {

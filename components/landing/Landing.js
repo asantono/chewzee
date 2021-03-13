@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import { colors } from "../../variables";
+import { deleteAllGames } from "../../api/game";
 
 const Landing = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -33,6 +34,12 @@ const Landing = ({ navigation }) => {
         onPress={() => navigation.navigate("ActiveGames")}
       >
         <Text style={styles.button}>Active Games</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.touchable}
+        onPress={() => deleteAllGames()}
+      >
+        <Text style={styles.button}>Delete All Games</Text>
       </TouchableOpacity>
     </View>
   );

@@ -22,7 +22,10 @@ const makeSocialArray = (obj) => {
     arr.push(temp);
     temp = {};
   }
-  return arr;
+  // I am creating new arrays for working arrays
+  // This is redundant. Consider refactor in a
+  // later version
+  return [...arr];
 };
 
 const makeGameArray = (obj) => {
@@ -30,7 +33,7 @@ const makeGameArray = (obj) => {
   for (let prop in obj) {
     arr.push(obj[prop]);
   }
-  return arr;
+  return [...arr];
 };
 
 export const userUpdate = (user) => {

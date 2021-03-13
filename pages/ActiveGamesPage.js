@@ -4,6 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import ActiveGames from "../components/activeGames/ActiveGames";
 import { colors } from "../variables";
 import { useSelector } from "react-redux";
+import UserListener from "../components/listen/UserListener";
 
 const ActiveGamesPage = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -15,6 +16,7 @@ const ActiveGamesPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <UserListener />
       <ActiveGames navigation={navigation} />
       <TouchableOpacity onPress={() => navigation.navigate("PastGames")}>
         <Text style={styles.link}>see past games</Text>

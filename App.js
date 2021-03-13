@@ -46,7 +46,6 @@ export default function App() {
       <StatusBar style="light" />
       <Provider store={store}>
         <Listen />
-        <UserListener />
         <Nav />
       </Provider>
     </View>

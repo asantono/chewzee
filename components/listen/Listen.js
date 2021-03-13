@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as firebase from "firebase";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdate, noUser } from "../../redux/actions/userActions";
 
@@ -9,9 +9,9 @@ const Listen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(userUpdate(user));
+    firebase.auth().onAuthStateChanged((newUser) => {
+      if (newUser) {
+        dispatch(userUpdate(newUser));
       } else {
         dispatch(noUser());
       }

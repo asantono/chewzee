@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.papasanto.chewzee",
-      "buildNumber": "0.8.7",
+      "buildNumber": "0.9.1",
       "config": {
 "googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
       }
@@ -30,8 +30,8 @@
       "versionCode": 3,
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/question-mark-adaptive.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/icon-1024.png",
+        "backgroundColor": "#e74c3c"
       },
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7728765463745066~7777365123"

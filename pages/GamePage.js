@@ -6,6 +6,7 @@ import Constants from "expo-constants";
 import Game from "../components/game/Game";
 import Push from "../utils/push/Push";
 import { colors } from "../variables";
+import UserListener from "../components/listen/UserListener";
 
 const GamePage = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -60,6 +61,7 @@ const GamePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Push />
+      <UserListener />
       <Game navigation={navigation} />
     </View>
   );
