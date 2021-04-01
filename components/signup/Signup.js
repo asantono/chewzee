@@ -121,12 +121,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   button: {
-    flex: 1,
     fontSize: 25,
     color: colors.white,
-    marginTop: 5,
-    height: "100%",
-    alignSelf: "center",
   },
   touchable: {
     width: 300,

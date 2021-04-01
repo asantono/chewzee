@@ -44,6 +44,18 @@ exports.searchZomato = functions.https.onRequest(async (req, res) => {
     const newGameRef = admin.database().ref("games").push();
     const key = newGameRef.key;
     const gameInitiated = Date.now();
+    // REMOVED PROMISE.ALL FOR AWAITS DUE TO NEEDING NEWGAMEREF FIRST
+    const gameRef = admin
+      .database()
+      .ref("users/" + user.uid + "/activeGames")
+      .push();
+    const gameKey = gameRef.key;
+
+    await admin
+      .database()
+      .ref(`users/${user.uid}/currentGame`)
+      .set({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
+
     const funcOne = newGameRef.set({
       restaurants: shuffledData,
       userOne: user.uid,
@@ -52,22 +64,15 @@ exports.searchZomato = functions.https.onRequest(async (req, res) => {
       round: 1,
       gameInitiated,
     });
-    const gameRef = admin
-      .database()
-      .ref("users/" + user.uid + "/activeGames")
-      .push();
-    const gameKey = gameRef.key;
+
     const funcTwo = gameRef.set({
       gameId: key,
       gameOverId: gameKey,
       zip: zip,
       gameInitiated,
     });
-    const funcThree = admin
-      .database()
-      .ref(`users/${user.uid}/currentGame`)
-      .set({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
-    Promise.all([funcOne, funcTwo, funcThree]);
+
+    await Promise.all([funcOne, funcTwo]);
     res
       .status(200)
       .json({ gameId: key, gameOverId: gameKey, zip: zip, gameInitiated });
@@ -154,7 +159,18 @@ exports.addGameToPlayerTwo = functions.https.onRequest(async (req, res) => {
       userOne: user.uid,
       userOneEmail: user.email,
     });
-    res.status(201).json({ message: "Game added to player two" });
+    // const tokenRef = await admin
+    //   .database()
+    //   .ref(`users/${friend.uid}/pushToken`)
+    //   .once("value");
+
+    const snap = await admin
+      .database()
+      .ref(`users/${friend.uid}/pushToken`)
+      .once("value");
+    res
+      .status(201)
+      .json({ token: snap.val(), message: "Game added to player two" });
   } catch (err) {
     console.log(err);
     res.status(400).json({ message: "Failed to set game for player two" });

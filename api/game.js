@@ -69,13 +69,14 @@ export const addFriendToGame = async (friend, user) => {
     const firebaseFunc =
       "https://us-central1-chewzee-2bf67.cloudfunctions.net/addGameToPlayerTwo";
     const headers = { "Content-type": "application/json" };
-    await fetch(firebaseFunc, {
+    let findToken = await fetch(firebaseFunc, {
       method: "POST",
       headers,
       body: body,
     });
-    if (friend.pushToken) {
-      sendPushNotification(friend.pushToken);
+    findToken = await findToken.json();
+    if (findToken.token) {
+      sendPushNotification(findToken.token);
     }
   } catch (err) {
     console.log(err);
@@ -110,10 +111,8 @@ export const updateRound = async (user, round) => {
       .database()
       .ref(`games/${user.currentGame.gameId}`)
       .update({ round });
-    return 1;
   } catch (err) {
     console.log(err);
-    return 0;
   }
 };
 

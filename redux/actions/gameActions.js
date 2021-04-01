@@ -54,7 +54,7 @@ export const setRestaurants = (user, lat, lng, zip, start) => async (
     });
     res = await res.json();
     if (res.status === "timeout") {
-      Alert.alert("Error communicating with server. Please try again later");
+      Alert.alert("Error communicating with servers. Please try again later");
       dispatch(setLoading(loadId));
       return;
     }

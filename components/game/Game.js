@@ -4,10 +4,8 @@ import { View, StyleSheet, Text, Dimensions } from "react-native";
 import * as firebase from "firebase";
 import {
   gameUpdate,
-  newGameTrue,
   setWinnersArray,
   setWorkingArray,
-  resetWinner,
 } from "../../redux/actions/gameActions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Linking from "expo-linking";
@@ -29,7 +27,6 @@ const Game = ({ navigation }) => {
     workingOffArrayNum,
     winner,
     round,
-    newGame,
   } = useSelector((state) => state.gameReducer);
   const { user } = useSelector((state) => state.userReducer);
 
@@ -58,6 +55,7 @@ const Game = ({ navigation }) => {
           gameUpdate({
             game: snapshot.val(),
             user,
+            newCards: false,
           })
         );
       }
@@ -76,26 +74,22 @@ const Game = ({ navigation }) => {
     }
     if (restaurants.arr1.length === restaurants.arr2.length) {
       let newRound;
-
       switch (round) {
         case 1:
           if (restaurants.arr1.length === 4) {
             newRound = 2;
-            dispatch(newGameTrue());
             updateRound(user, newRound);
           }
           break;
         case 2:
           if (restaurants.arr1.length === 2) {
             newRound = 3;
-            dispatch(newGameTrue());
             updateRound(user, newRound);
           }
           break;
         case 3:
           if (restaurants.arr1.length === 1) {
             newRound = 4;
-            dispatch(newGameTrue());
             updateRound(user, newRound);
           }
           break;
@@ -421,11 +415,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    flex: 1,
     fontSize: 25,
     color: colors.white,
-    height: "100%",
-    alignSelf: "center",
   },
 });
 

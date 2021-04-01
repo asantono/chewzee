@@ -20,6 +20,7 @@ import Loading from "../loading/Loading";
 
 const Search = (props) => {
   const [text, setText] = useState("");
+  const [feedback, setFeedback] = useState("");
   const { navigation } = props;
   const { user } = useSelector((state) => state.userReducer);
   const { goTo, start } = useSelector((state) => state.gameReducer);
@@ -28,16 +29,19 @@ const Search = (props) => {
   useEffect(() => {
     if (goTo === "addFriend") {
       dispatch(goFalse());
+      setFeedback("");
       navigation.navigate("Friends");
     }
   }, [goTo]);
 
   const getLocation = async () => {
+    setFeedback("Finding you");
     let { status } = await Location.requestPermissionsAsync();
     const loadId = uuid();
     dispatch(setLoading(loadId));
     if (status !== "granted") {
       dispatch(setLoading(loadId));
+      setFeedback("");
       Alert.alert(
         "zip code search is only available in the United States. Location services are available elsewhere"
       );
@@ -47,6 +51,7 @@ const Search = (props) => {
     try {
       let location = await Location.getCurrentPositionAsync({});
       dispatch(setLoading(loadId));
+      setFeedback("");
       onSearch(location.coords.latitude, location.coords.longitude);
     } catch (err) {
       console.log(err);
@@ -56,11 +61,13 @@ const Search = (props) => {
   };
 
   const onSearch = (autoLat, autoLng) => {
+    setFeedback("Searching restaurants");
     Keyboard.dismiss();
     try {
       if (!autoLat) {
         const { zip, lat, lng } = useZipToCoordinates(text);
         if (!zip) {
+          setFeedback("");
           Alert.alert("zip code not found");
           return;
         }
@@ -78,6 +85,7 @@ const Search = (props) => {
   return (
     <View style={styles.container}>
       <Loading />
+      {feedback ? <Text style={styles.feedback}>{feedback}</Text> : null}
       <TextInput
         style={styles.textInput}
         onChangeText={(text) => setText(text)}
@@ -105,6 +113,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: 420,
+  },
+  feedback: {
+    position: "absolute",
+    top: 0,
+    height: 40,
+    width: 420,
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: colors.white,
+    fontSize: 30,
+    backgroundColor: colors.blue,
+    fontWeight: "800",
+    zIndex: 200000,
   },
   textInput: {
     height: 40,
@@ -144,12 +165,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    flex: 1,
     fontSize: 25,
     color: colors.white,
-    marginTop: 5,
-    height: "100%",
-    alignSelf: "center",
   },
   text: {
     fontSize: 20,

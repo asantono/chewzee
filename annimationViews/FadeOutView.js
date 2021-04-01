@@ -18,7 +18,7 @@ const FadeOutView = (props) => {
       useNativeDriver: true,
       duration: 300,
     }).start(),
-      await sleep(400);
+      await sleep(300);
     Animated.timing(floatAnim, {
       toValue: 1,
       useNativeDriver: true,
@@ -38,7 +38,7 @@ const FadeOutView = (props) => {
   });
 
   const fadeInWait = async () => {
-    await sleep(1400);
+    await sleep(1250);
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 0,
@@ -55,6 +55,7 @@ const FadeOutView = (props) => {
         useNativeDriver: true,
       }).start();
       fadeInWait();
+      setStartFade(false);
     }
   }, [startFade]);
 

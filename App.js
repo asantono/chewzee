@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, View, LogBox } from "react-native";
+import { StyleSheet, View, LogBox, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -33,11 +33,15 @@ import InstructionsFullPage from "./pages/InstructionsFullPage";
 
 LogBox.ignoreLogs(["Setting a timer"]);
 
+Text.defaultProps = {
+  ...Text.defaultProps,
+  maxFontSizeMultiplier: 1.2,
+};
+
 export default function App() {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   } else {
-    console.log(firebase.apps.length);
     firebase.app(); // if already initialized, use that one
   }
 

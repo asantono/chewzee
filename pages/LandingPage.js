@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import Landing from "../components/landing/Landing";
 import { useSelector } from "react-redux";
+import UserListener from "../components/listen/UserListener";
 
 const LandingPage = ({ navigation }) => {
   const { user } = useSelector((state) => state.userReducer);
@@ -12,6 +13,7 @@ const LandingPage = ({ navigation }) => {
   }, [user.uid]);
   return (
     <View style={styles.container}>
+      <UserListener />
       <Landing navigation={navigation} />
     </View>
   );

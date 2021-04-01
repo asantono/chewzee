@@ -61,6 +61,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         winner: INITIAL_STATE.winner,
         workingArray: INITIAL_STATE.workingArray,
         round: INITIAL_STATE.round,
+        restaurants: INITIAL_STATE.restaurants,
         winnersArray: INITIAL_STATE.winnersArray,
         lastWinner: INITIAL_STATE.lastWinner,
       };
@@ -78,6 +79,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         newGame: INITIAL_STATE.newGame,
         winner: INITIAL_STATE.winner,
         workingArray: INITIAL_STATE.workingArray,
+        restaurants: INITIAL_STATE.restaurants,
         round: INITIAL_STATE.round,
         winnersArray: INITIAL_STATE.winnersArray,
         lastWinner: INITIAL_STATE.lastWinner,
@@ -151,7 +153,7 @@ const gameReducer = (state = INITIAL_STATE, action) => {
     case GAME_UPDATE:
       // THIS IS ALL THE GAME LOGIC ACCEPT FOR ROUND ADVANCES AND WINNER ADVANCES
       // THOSE ARE DONE IN Game.js
-      const { game, user } = payload;
+      const { game, user, newCards } = payload;
       if (!game.restaurants) {
         Alert.alert("No restaurants found");
         return;
@@ -215,7 +217,6 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           roundOver: true,
         };
       };
-
       let data;
       switch (round) {
         case 1:
@@ -227,75 +228,37 @@ const gameReducer = (state = INITIAL_STATE, action) => {
           }
           // Assign arr1 to userOne after checking that the round is not over
           if (userOne === user.uid) {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr1.length === 4) {
-              data = roundOverReturn();
-              return data;
-            } else {
-              // userOne gets arr1 here:
-              data = assignArrayOne();
-              return data;
-            }
+            // userOne gets arr1 here:
+            data = assignArrayOne();
+            return data;
           } else {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr2.length === 4) {
-              data = roundOverReturn();
-              return data;
-            }
-            // Assign arr2 to userTwo after checking that the round is not over
-            else {
-              data = assignArrayTwo();
-              return data;
-            }
+            data = assignArrayTwo();
+            return data;
           }
         case 2:
           // userOne gets arr1 / userTwo gets arr1
-          if (!state.newGame) {
+          if (game.round === state.round) {
             data = plainReturn();
             return data;
           }
           if (userTwo === user.uid) {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr1.length === 2) {
-              data = roundOverReturn();
-              return data;
-            } else {
-              data = assignArrayOne();
-              return data;
-            }
+            data = assignArrayOne();
+            return data;
           } else {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr2.length === 2) {
-              data = roundOverReturn();
-              return data;
-            } else {
-              data = assignArrayTwo();
-              return data;
-            }
+            data = assignArrayTwo();
+            return data;
           }
         case 3:
-          if (!state.newGame) {
+          if (game.round === state.round) {
             data = plainReturn();
             return data;
           }
           if (userOne === user.uid) {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr1.length === 1) {
-              data = roundOverReturn();
-              return data;
-            } else {
-              data = assignArrayOne();
-              return data;
-            }
+            data = assignArrayOne();
+            return data;
           } else {
-            // Check that picks were not already made and set to empty array if they were
-            if (restaurants.arr2.length === 1) {
-              data = roundOverReturn();
-              return data;
-            } else {
-              data = assignArrayTwo();
-              return data;
-            }
+            data = assignArrayTwo();
+            return data;
           }
         case 4:
           // Give userTwo the final choice
@@ -319,7 +282,6 @@ const gameReducer = (state = INITIAL_STATE, action) => {
         default:
           break;
       }
-
     default:
       return state;
   }

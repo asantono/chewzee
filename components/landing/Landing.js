@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import { colors } from "../../variables";
@@ -35,12 +35,6 @@ const Landing = ({ navigation }) => {
       >
         <Text style={styles.button}>Active Games</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.touchable}
-        onPress={() => deleteAllGames()}
-      >
-        <Text style={styles.button}>Delete All Games</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -73,22 +67,21 @@ const styles = StyleSheet.create({
     borderRadius: 900000,
   },
   touchableOrange: {
+    display: "flex",
     width: 300,
     height: 40,
     marginTop: 20,
     backgroundColor: colors.orange,
     alignItems: "center",
     justifyContent: "center",
+    textAlignVertical: "center",
+    alignContent: "center",
     borderRadius: 900000,
   },
 
   button: {
-    flex: 1,
     fontSize: 25,
     color: colors.white,
-    marginTop: 5,
-    height: "100%",
-    alignSelf: "center",
   },
 });
 

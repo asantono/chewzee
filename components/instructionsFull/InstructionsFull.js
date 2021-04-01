@@ -81,12 +81,8 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    flex: 1,
     fontSize: 25,
     color: colors.white,
-    marginTop: 5,
-    height: "100%",
-    alignSelf: "center",
   },
 });
 

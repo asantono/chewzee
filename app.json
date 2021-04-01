@@ -20,14 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.papasanto.chewzee",
-      "buildNumber": "0.9.1",
+      "buildNumber": "0.9.6",
       "config": {
-"googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
+        "googleMobileAdsAppId": "ca-app-pub-7728765463745066~2914769309"
       }
     },
     "android": {
       "package": "com.papasanto.chewzee",
-      "versionCode": 3,
+      "versionCode": 4,
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon-1024.png",
@@ -39,6 +39,7 @@
     },
     "web": {
       "favicon": "./assets/icon-48.png"
-    }
+    },
+    "description": ""
   }
 }
